@@ -31,7 +31,6 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             aztec:historyEnable="true"
-            android:visibility="gone"
             aztec:historySize="10"/>
 
         <org.wordpress.mobile.ReactNativeAztec.ReactSourceViewEditText
@@ -48,7 +47,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:textSize="14sp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:imeOptions="flagNoExtractUi"
             aztec:codeBackgroundColor="@android:color/transparent"
             aztec:codeTextColor="@android:color/black"/>
