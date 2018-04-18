@@ -33,7 +33,7 @@
             aztec:historyEnable="true"
             aztec:historySize="10"/>
 
-        <org.wordpress.aztec.source.SourceViewEditText
+        <org.wordpress.mobile.ReactNativeAztec.ReactSourceViewEditText
             android:id="@+id/source"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

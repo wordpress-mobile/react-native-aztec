@@ -4,12 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import org.wordpress.aztec.source.SourceViewEditText;
 import org.wordpress.aztec.toolbar.AztecToolbar;
 
 public class ReactAztecView extends RelativeLayout {
     private ReactAztecText mAztecText;
-    private SourceViewEditText mSourceEditor;
+    private ReactSourceViewEditText mSourceEditor;
     private AztecToolbar mToolbar;
 
     public ReactAztecView(Context ctx) {
@@ -28,11 +27,11 @@ public class ReactAztecView extends RelativeLayout {
         this.mAztecText = aztecText;
     }
 
-    public SourceViewEditText getSourceEditor() {
+    public ReactSourceViewEditText getSourceEditor() {
         return mSourceEditor;
     }
 
-    public void setSourceEditor(SourceViewEditText mSourceEditor) {
+    public void setSourceEditor(ReactSourceViewEditText mSourceEditor) {
         this.mSourceEditor = mSourceEditor;
     }
 

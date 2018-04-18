@@ -4,12 +4,12 @@ package org.wordpress.mobile.ReactNativeAztec;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import org.wordpress.mobile.ReactNativeAztec.R;
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.MapBuilder;
@@ -28,7 +28,6 @@ import com.facebook.react.views.textinput.ScrollWatcher;
 
 import org.jetbrains.annotations.NotNull;
 import org.wordpress.aztec.ITextFormat;
-import org.wordpress.aztec.source.SourceViewEditText;
 import org.wordpress.aztec.toolbar.AztecToolbar;
 import org.wordpress.aztec.toolbar.IAztecToolbarClickListener;
 
@@ -55,7 +54,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecView> {
         ReactAztecView aztecView = (ReactAztecView) li.inflate(R.layout.aztec_main, null);
         ReactAztecText aztecText = aztecView.findViewById(R.id.aztec);
         aztecView.setAztecText(aztecText);
-        SourceViewEditText sourceEditor = aztecView.findViewById(R.id.source);
+        ReactSourceViewEditText sourceEditor = aztecView.findViewById(R.id.source);
         aztecView.setSourceEditor(sourceEditor);
         AztecToolbar toolbar = aztecView.findViewById(R.id.formatting_toolbar);
         aztecView.setToolbar(toolbar);
@@ -124,6 +123,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecView> {
         } catch (IllegalArgumentException e) {
         }
         view.getAztecText().setTextColor(newColor);
+        view.getSourceEditor().setTextColor(newColor);
     }
 
     @ReactProp(name = "maxImagesWidth")
@@ -139,9 +139,11 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecView> {
     @ReactProp(name = "onContentSizeChange", defaultBoolean = false)
     public void setOnContentSizeChange(final ReactAztecView view, boolean onContentSizeChange) {
         if (onContentSizeChange) {
-            view.getAztecText().setContentSizeWatcher(new AztecContentSizeWatcher(view));
+            view.getAztecText().setContentSizeWatcher(new AztecContentSizeWatcher(view, true));
+            view.getSourceEditor().setContentSizeWatcher(new AztecContentSizeWatcher(view, false));
         } else {
             view.getAztecText().setContentSizeWatcher(null);
+            view.getSourceEditor().setContentSizeWatcher(null);
         }
     }
 
@@ -157,6 +159,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecView> {
     @Override
     protected void addEventEmitters(final ThemedReactContext reactContext, final ReactAztecView aztecView) {
         aztecView.getAztecText().addTextChangedListener(new AztecTextWatcher(reactContext, aztecView));
+        aztecView.getSourceEditor().addTextChangedListener(null); // FIXME: not sure we need to create a AztecTextWatcher
         aztecView.getAztecText().setOnFocusChangeListener(
                 new View.OnFocusChangeListener() {
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -289,25 +292,32 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecView> {
         private EventDispatcher mEventDispatcher;
         private int mPreviousContentWidth = 0;
         private int mPreviousContentHeight = 0;
+        private final boolean mIsAztecText;
 
-        public AztecContentSizeWatcher(ReactAztecView view) {
+        public AztecContentSizeWatcher(ReactAztecView view, Boolean isAztecText) {
             mReactAztecView = view;
-            ReactContext reactContext = (ReactContext) mReactAztecView.getAztecText().getContext();
+            mIsAztecText = isAztecText;
+            ReactContext reactContext = (ReactContext) (isAztecText ? mReactAztecView.getAztecText().getContext() :
+                    mReactAztecView.getSourceEditor().getContext());
             mEventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
         }
 
         @Override
         public void onLayout() {
-            final ReactAztecText aztecText = mReactAztecView.getAztecText();
-            int contentWidth = aztecText.getWidth();
-            int contentHeight = aztecText.getHeight();
+            final AppCompatEditText editText = mIsAztecText ? mReactAztecView.getAztecText() :mReactAztecView.getSourceEditor();
+            // TODO: we must not call resize if the component is not visible - check that this guard works fine
+            if (!editText.isShown()) {
+                return;
+            }
+            int contentWidth = editText.getWidth();
+            int contentHeight = editText.getHeight();
 
             // Use instead size of text content within EditText when available
-            if (aztecText.getLayout() != null) {
-                contentWidth = aztecText.getCompoundPaddingLeft() + aztecText.getLayout().getWidth() +
-                        aztecText.getCompoundPaddingRight();
-                contentHeight = aztecText.getCompoundPaddingTop() + aztecText.getLayout().getHeight() +
-                        aztecText.getCompoundPaddingBottom();
+            if (editText.getLayout() != null) {
+                contentWidth = editText.getCompoundPaddingLeft() + editText.getLayout().getWidth() +
+                        editText.getCompoundPaddingRight();
+                contentHeight = editText.getCompoundPaddingTop() + editText.getLayout().getHeight() +
+                        editText.getCompoundPaddingBottom();
             }
 
             if (contentWidth != mPreviousContentWidth || contentHeight != mPreviousContentHeight) {
