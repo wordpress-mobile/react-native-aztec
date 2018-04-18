@@ -9,7 +9,7 @@ buildscript {
         robolectricVersion = '3.5.1'
         jUnitVersion = '4.12'
         jSoupVersion = '1.10.3'
-        wordpressUtilsVersion = '1.18.1'
+        wordpressUtilsVersion = '1.20.2'
         espressoVersion = '3.0.1'
     }
 
@@ -77,10 +77,11 @@ repositories {
 }
 
 dependencies {
-    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:v1.3.2')
-    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:glide-loader:v1.3.2')
-    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:wordpress-shortcodes:v1.3.2')
-    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:wordpress-comments:v1.3.2')
+    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:5ee0ca977bedab3bf0e52e3d186fa9087075d1b9')
+    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:wordpress-shortcodes:5ee0ca977bedab3bf0e52e3d186fa9087075d1b9')
+    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:wordpress-comments:5ee0ca977bedab3bf0e52e3d186fa9087075d1b9')
+    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:glide-loader:5ee0ca977bedab3bf0e52e3d186fa9087075d1b9')
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
