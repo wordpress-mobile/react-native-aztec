@@ -101,8 +101,10 @@ Pods/
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 
-Carthage/Build
-Carthage/Checkouts
+# Currently we'll just ignore all "Carthage" folder contents.
+#Carthage/Build
+#Carthage/Checkouts
+Carthage
 
 # fastlane
 #
