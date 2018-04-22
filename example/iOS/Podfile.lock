@@ -1,0 +1,22 @@
+PODS:
+  - WordPress-Aztec-iOS (1.0.0-beta.18.1)
+
+DEPENDENCIES:
+  - WordPress-Aztec-iOS (from `https://github.com/wordpress-mobile/AztecEditor-iOS.git`, commit `f6e0e800f8fa3a9173a3927c6e914b2a154e8299`)
+
+EXTERNAL SOURCES:
+  WordPress-Aztec-iOS:
+    :commit: f6e0e800f8fa3a9173a3927c6e914b2a154e8299
+    :git: https://github.com/wordpress-mobile/AztecEditor-iOS.git
+
+CHECKOUT OPTIONS:
+  WordPress-Aztec-iOS:
+    :commit: f6e0e800f8fa3a9173a3927c6e914b2a154e8299
+    :git: https://github.com/wordpress-mobile/AztecEditor-iOS.git
+
+SPEC CHECKSUMS:
+  WordPress-Aztec-iOS: 2d8c58f68f422ce521db689fb582122220e77f8d
+
+PODFILE CHECKSUM: 454ede84fbe0fe256c743491979a40a438aa7fd6
+
+COCOAPODS: 1.4.0
