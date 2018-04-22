@@ -1,0 +1,322 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1704C2141CAF0D7E00F991DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1704C2131CAF0D7E00F991DE /* AppDelegate.swift */; };
+		1704C2161CAF0D7E00F991DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1704C2151CAF0D7E00F991DE /* ViewController.swift */; };
+		1704C2191CAF0D7E00F991DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1704C2171CAF0D7E00F991DE /* Main.storyboard */; };
+		1704C21B1CAF0D7E00F991DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1704C21A1CAF0D7E00F991DE /* Assets.xcassets */; };
+		1704C21E1CAF0D7E00F991DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1704C21C1CAF0D7E00F991DE /* LaunchScreen.storyboard */; };
+		E1D334191D86C76D00160AB5 /* Gridicons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E1D334181D86C76D00160AB5 /* Gridicons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		17A824C61CB2865E004771DB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E1D334191D86C76D00160AB5 /* Gridicons.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1704C2101CAF0D7E00F991DE /* GridiconsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridiconsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1704C2131CAF0D7E00F991DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1704C2151CAF0D7E00F991DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1704C2181CAF0D7E00F991DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1704C21A1CAF0D7E00F991DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1704C21D1CAF0D7E00F991DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1704C21F1CAF0D7E00F991DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1D334181D86C76D00160AB5 /* Gridicons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gridicons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1704C20D1CAF0D7E00F991DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1704C2071CAF0D7E00F991DE = {
+			isa = PBXGroup;
+			children = (
+				E1D334181D86C76D00160AB5 /* Gridicons.framework */,
+				1704C2121CAF0D7E00F991DE /* GridiconsDemo */,
+				1704C2111CAF0D7E00F991DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1704C2111CAF0D7E00F991DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1704C2101CAF0D7E00F991DE /* GridiconsDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1704C2121CAF0D7E00F991DE /* GridiconsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				1704C2131CAF0D7E00F991DE /* AppDelegate.swift */,
+				1704C2151CAF0D7E00F991DE /* ViewController.swift */,
+				1704C2171CAF0D7E00F991DE /* Main.storyboard */,
+				1704C21A1CAF0D7E00F991DE /* Assets.xcassets */,
+				1704C21C1CAF0D7E00F991DE /* LaunchScreen.storyboard */,
+				1704C21F1CAF0D7E00F991DE /* Info.plist */,
+			);
+			path = GridiconsDemo;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1704C20F1CAF0D7E00F991DE /* GridiconsDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1704C2221CAF0D7E00F991DE /* Build configuration list for PBXNativeTarget "GridiconsDemo" */;
+			buildPhases = (
+				1704C20C1CAF0D7E00F991DE /* Sources */,
+				1704C20D1CAF0D7E00F991DE /* Frameworks */,
+				1704C20E1CAF0D7E00F991DE /* Resources */,
+				17A824C61CB2865E004771DB /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GridiconsDemo;
+			productName = GridiconsDemo;
+			productReference = 1704C2101CAF0D7E00F991DE /* GridiconsDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1704C2081CAF0D7E00F991DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Automattic;
+				TargetAttributes = {
+					1704C20F1CAF0D7E00F991DE = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
+					};
+				};
+			};
+			buildConfigurationList = 1704C20B1CAF0D7E00F991DE /* Build configuration list for PBXProject "GridiconsDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1704C2071CAF0D7E00F991DE;
+			productRefGroup = 1704C2111CAF0D7E00F991DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1704C20F1CAF0D7E00F991DE /* GridiconsDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1704C20E1CAF0D7E00F991DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1704C21E1CAF0D7E00F991DE /* LaunchScreen.storyboard in Resources */,
+				1704C21B1CAF0D7E00F991DE /* Assets.xcassets in Resources */,
+				1704C2191CAF0D7E00F991DE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1704C20C1CAF0D7E00F991DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1704C2161CAF0D7E00F991DE /* ViewController.swift in Sources */,
+				1704C2141CAF0D7E00F991DE /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1704C2171CAF0D7E00F991DE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1704C2181CAF0D7E00F991DE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1704C21C1CAF0D7E00F991DE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1704C21D1CAF0D7E00F991DE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1704C2201CAF0D7E00F991DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1704C2211CAF0D7E00F991DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1704C2231CAF0D7E00F991DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = GridiconsDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.GridiconsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		1704C2241CAF0D7E00F991DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = GridiconsDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.GridiconsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1704C20B1CAF0D7E00F991DE /* Build configuration list for PBXProject "GridiconsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1704C2201CAF0D7E00F991DE /* Debug */,
+				1704C2211CAF0D7E00F991DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1704C2221CAF0D7E00F991DE /* Build configuration list for PBXNativeTarget "GridiconsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1704C2231CAF0D7E00F991DE /* Debug */,
+				1704C2241CAF0D7E00F991DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1704C2081CAF0D7E00F991DE /* Project object */;
+}
