@@ -4,6 +4,7 @@ import UIKit
 
 class RCTAztecView: Aztec.TextView {
     @objc var onChange: RCTBubblingEventBlock? = nil
+    @objc var onEnter: RCTBubblingEventBlock? = nil
     @objc var onContentSizeChange: RCTBubblingEventBlock? = nil
 
     @objc var onActiveFormatsChange: RCTBubblingEventBlock? = nil
@@ -26,11 +27,16 @@ class RCTAztecView: Aztec.TextView {
     }
 
     func commonInit() {
+        super.onEnter = { onEnter() }
+        
         delegate = self
+        
         addSubview(placeholderLabel)
+        
         placeholderLabel.textAlignment = .natural
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.font = font
+        
         NSLayoutConstraint.activate([
             placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInset.left + textContainerInset.left + textContainer.lineFragmentPadding),
             placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: contentInset.top + textContainerInset.top)
@@ -60,9 +66,17 @@ class RCTAztecView: Aztec.TextView {
     
     // MARK: - Edits
     
+    func onEnter() {
+        if let onEnter = onEnter {
+            onEnter()
+        }
+    }
+    
     open override func insertText(_ text: String) {
         super.insertText(text)
+        
         updatePlaceholderVisibility()
+        
         if let onChange = onChange {
             let text = packForRN(getHTML(), withName: "text")
             onChange(text)
@@ -71,7 +85,9 @@ class RCTAztecView: Aztec.TextView {
     
     open override func deleteBackward() {
         super.deleteBackward()
+        
         updatePlaceholderVisibility()
+        
         if let onChange = onChange {
             let text = packForRN(getHTML(), withName: "text")
             onChange(text)
