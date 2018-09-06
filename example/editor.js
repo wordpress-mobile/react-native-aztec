@@ -46,7 +46,6 @@ export default class Editor extends Component {
                 placeholderTextColor = {'lightgray'} // See http://facebook.github.io/react-native/docs/colors                
                 onContentSizeChange= { onContentSizeChange }
                 onChange= {(event) => console.log(event.nativeEvent) }
-                onEnter= {(event) => console.log("asta") }
                 onEndEditing= {(event) => console.log(event.nativeEvent) }
                 onActiveFormatsChange = { this.onActiveFormatsChange }
                 color = {'black'}
