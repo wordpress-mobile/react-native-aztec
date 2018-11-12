@@ -2,6 +2,9 @@ package org.wordpress.mobile.ReactNativeAztec;
 
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
 
 import com.facebook.react.bridge.ReactContext;
@@ -40,6 +43,7 @@ public class ReactAztecText extends AztecText {
     String lastSentFormattingOptionsEventString = "";
     boolean shouldHandleOnEnter = false;
     boolean shouldHandleOnBackspace = false;
+    boolean isHandlingEnterEvent;
 
     public ReactAztecText(ThemedReactContext reactContext) {
         super(reactContext);
@@ -59,6 +63,59 @@ public class ReactAztecText extends AztecText {
                 return false;
             }
         });
+
+        // FIXME: Enter.key detection in Aztec was bugged, and disabled.
+        // The code below is just a copy of the previous bugged solution we had in Aztec, that has the
+        // repeating characters in the editor problems, copied here until we find a good solution
+        // in Aztec
+        // See: https://github.com/wordpress-mobile/AztecEditor-Android/issues/760
+        final InputFilter[] filters = this.getFilters();
+        InputFilter[] newFilters = new InputFilter[filters.length + 1];
+        System.arraycopy(filters, 0, newFilters, 0, filters.length);
+
+        final InputFilter enterKeyInputFilter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (isTextChangedListenerDisabled() || isHandlingEnterEvent) {
+                    // If the view is not initialized do nothing and accept the changes
+                    return null;
+                } else if (end > 1 && start == 0 && dstart == 0 && dend == 0) {
+                    // When the initial content is set to Aztec accept the changes without checking
+                    // This case is just an additional check that should never happen if
+                    // you call `fromHTML` since isTextChangedListenerDisabled does the trick
+                    return null;
+                }
+                isHandlingEnterEvent = true;
+                //  You sometimes get a SpannableStringBuilder, sometimes a plain String in the source parameter
+                if (source instanceof SpannableStringBuilder) {
+                    for (int i = end - 1; i >= start; i--) {
+                        char currentChar = source.charAt(i);
+                        if (currentChar == '\n') {
+                            onEnter();
+                            return null;
+                        }
+                    }
+                    isHandlingEnterEvent = false;
+                    return source;
+                } else {
+                    StringBuilder filteredStringBuilder = new StringBuilder();
+                    for (int i = start; i < end; i++) {
+                        char currentChar = source.charAt(i);
+                        if (currentChar == '\n') {
+                            onEnter();
+                        } else {
+                            filteredStringBuilder.append(currentChar);
+                        }
+                    }
+                    isHandlingEnterEvent = false;
+                    return filteredStringBuilder.toString();
+                }
+            }
+        };
+
+        newFilters[newFilters.length-1] = enterKeyInputFilter;
+        this.setFilters(newFilters);
+        // End of the Fix-me
     }
 
     @Override
