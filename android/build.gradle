@@ -75,8 +75,8 @@ android {
 
 
 repositories {
-    jcenter()
     google()
+    jcenter()
     maven { url "https://jitpack.io" }
     maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
