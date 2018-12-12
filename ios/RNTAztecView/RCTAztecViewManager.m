@@ -5,6 +5,7 @@
 RCT_REMAP_VIEW_PROPERTY(text, contents, NSDictionary)
 RCT_EXPORT_VIEW_PROPERTY(onContentSizeChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onBackspace, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onDelete, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onEnter, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onFocus, RCTBubblingEventBlock)

@@ -4,6 +4,7 @@ import UIKit
 
 class RCTAztecView: Aztec.TextView {
     @objc var onBackspace: RCTBubblingEventBlock? = nil
+    @objc var onDelete: RCTBubblingEventBlock? = nil
     @objc var onChange: RCTBubblingEventBlock? = nil
     @objc var onEnter: RCTBubblingEventBlock? = nil
     @objc var onFocus: RCTBubblingEventBlock? = nil
@@ -73,6 +74,23 @@ class RCTAztecView: Aztec.TextView {
         updatePlaceholderVisibility()
     }
     
+    /// The first rule of Fight Club is: You do not talk about Fight Club.
+    ///
+    @objc func _deleteForwardAndNotify(_ notify: Bool) {
+        
+        guard !interceptForwardDelete() else {
+            return
+        }
+        
+        let selector = #selector(RCTAztecView._deleteForwardAndNotify(_:))
+        let imp = class_getMethodImplementation(TextView.superclass(), selector)
+        
+        typealias ClosureType = @convention(c) (AnyObject, Selector, Bool) -> Void
+        let superMethod: ClosureType = unsafeBitCast(imp, to: ClosureType.self)
+        
+        superMethod(self, selector, notify)
+    }
+    
     open override func deleteBackward() {
         guard !interceptBackspace() else {
             return
@@ -92,6 +110,17 @@ class RCTAztecView: Aztec.TextView {
         
         let caretData = packCaretDataForRN()
         onEnter(caretData)
+        return true
+    }
+    
+    private func interceptForwardDelete() -> Bool {
+        guard selectedRange.location == attributedText.length && selectedRange.length == 0,
+            let onDelete = onDelete else {
+                return false
+        }
+        
+        let caretData = packCaretDataForRN()
+        onDelete(caretData)
         return true
     }
     

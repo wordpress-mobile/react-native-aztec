@@ -20,6 +20,7 @@ class AztecView extends React.Component {
     onContentSizeChange: PropTypes.func,
     onEnter: PropTypes.func,
     onBackspace: PropTypes.func,
+    onDelete: PropTypes.func,
     onScroll: PropTypes.func,
     onActiveFormatsChange: PropTypes.func,
     onSelectionChange: PropTypes.func,
@@ -77,6 +78,15 @@ class AztecView extends React.Component {
 
     const { onBackspace } = this.props;
     onBackspace(event);
+  }
+
+  _onDelete = (event) => {
+    if (!this.props.onDelete) {
+      return;
+    }
+
+    const { onDelete } = this.props;
+    onDelete(event);
   }
 
   _onHTMLContentWithCursor = (event) => {
@@ -149,6 +159,7 @@ class AztecView extends React.Component {
           onFocus = { () => {} } 
           onBlur = { this._onBlur }
           onBackspace = { this._onBackspace }
+          onDelete = { this._onDelete }
         />
       </TouchableWithoutFeedback>
     );
