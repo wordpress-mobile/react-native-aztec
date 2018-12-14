@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.infer.annotation.Assertions;
@@ -25,6 +26,8 @@ import org.wordpress.aztec.plugins.IToolbarButton;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import kotlin.Triple;
 
 public class ReactAztecText extends AztecText {
 
@@ -50,6 +53,7 @@ public class ReactAztecText extends AztecText {
     boolean shouldHandleOnBackspace = false;
     boolean shouldHandleOnSelectionChange = false;
     boolean shouldHandleActiveFormatsChange = false;
+    boolean shouldHandleActiveFormatAttributesChange = false;
 
     public ReactAztecText(ThemedReactContext reactContext) {
         super(reactContext);
@@ -76,6 +80,7 @@ public class ReactAztecText extends AztecText {
             public void onSelectionChanged(int selStart, int selEnd) {
                 ReactAztecText.this.updateToolbarButtons(selStart, selEnd);
                 ReactAztecText.this.propagateSelectionChanges(selStart, selEnd);
+                ReactAztecText.this.propagateAttributesChange();
             }
         });
     }
@@ -152,6 +157,8 @@ public class ReactAztecText extends AztecText {
 
     public void setContentSizeWatcher(ContentSizeWatcher contentSizeWatcher) {
         mContentSizeWatcher = contentSizeWatcher;
+
+
     }
 
     private void onContentSizeChange() {
@@ -192,6 +199,9 @@ public class ReactAztecText extends AztecText {
             if (currentStyle == AztecTextFormat.FORMAT_STRIKETHROUGH) {
                 formattingOptions.add("strikethrough");
             }
+            if (currentStyle == AztecTextFormat.FORMAT_LINK) {
+                formattingOptions.add("link");
+            }
         }
 
         // Check if the same formatting event was already sent
@@ -203,6 +213,7 @@ public class ReactAztecText extends AztecText {
             // no need to send any event now
             return;
         }
+
         lastSentFormattingOptionsEventString = newOptionsAsString;
 
         if (shouldHandleActiveFormatsChange) {
@@ -214,6 +225,17 @@ public class ReactAztecText extends AztecText {
                             formattingOptions.toArray(new String[formattingOptions.size()])
                     )
             );
+        }
+
+        if (shouldHandleActiveFormatAttributesChange) {
+            ReactContext reactContext = (ReactContext) getContext();
+            EventDispatcher eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
+//            eventDispatcher.dispatchEvent(
+//                    new ReactAztecFormattingAttributesChange(
+//                            getId(),
+//                            formattingOptions.toArray(new String[formattingOptions.size()])
+//                    )
+//            );
         }
     }
 
@@ -227,6 +249,11 @@ public class ReactAztecText extends AztecText {
         eventDispatcher.dispatchEvent(
                 new ReactAztecSelectionChangeEvent(getId(), content, selStart, selEnd)
         );
+    }
+
+    private void propagateAttributesChange() {
+        Triple<String, String, Boolean> triple = linkFormatter.getSelectedUrlWithAnchor();
+        Log.e("ivasavic", "test");
     }
 
     @Override
@@ -328,6 +355,9 @@ public class ReactAztecText extends AztecText {
             break;
             case ("strikethrough"):
                 newFormats.add(AztecTextFormat.FORMAT_STRIKETHROUGH);
+            break;
+            case ("link") :
+                newFormats.add(AztecTextFormat.FORMAT_LINK);
             break;
         }
 

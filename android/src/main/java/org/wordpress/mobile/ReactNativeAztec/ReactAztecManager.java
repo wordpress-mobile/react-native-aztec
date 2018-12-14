@@ -105,6 +105,11 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                                 "phasedRegistrationNames",
                                 MapBuilder.of("bubbled", "onActiveFormatsChange")))
                 .put(
+                        "topFormatAttributeChanges",
+                        MapBuilder.of(
+                                "phasedRegistrationNames",
+                                MapBuilder.of("bubbled", "onActiveFormatAttributesChange")))
+                .put(
                         "topEndEditing",
                         MapBuilder.of(
                                 "phasedRegistrationNames",
@@ -259,6 +264,11 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         view.shouldHandleActiveFormatsChange = onActiveFormatsChange;
     }
 
+    @ReactProp(name = "onActiveFormatAttributesChange", defaultBoolean = false)
+    public void setOnActiveFormatAttributesChange(final ReactAztecText view, boolean onActiveFormatAttributesChange) {
+        view.shouldHandleActiveFormatAttributesChange = onActiveFormatAttributesChange;
+    }
+
     @ReactProp(name = "onSelectionChange", defaultBoolean = false)
     public void setOnSelectionChange(final ReactAztecText view, boolean onSelectionChange) {
         view.shouldHandleOnSelectionChange = onSelectionChange;
@@ -281,6 +291,16 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     @ReactProp(name = "onBackspace", defaultBoolean = false)
     public void setOnBackspaceHandling(final ReactAztecText view, boolean onBackspaceHandling) {
         view.shouldHandleOnBackspace = onBackspaceHandling;
+    }
+
+    @ReactProp(name = "setLink", defaultBoolean = false)
+    public void setLink(final ReactAztecText view, String url, String title) {
+        view.link(url, title, false);
+    }
+
+    @ReactProp(name = "removeLink", defaultBoolean = false)
+    public void removeLink(final ReactAztecText view) {
+        view.removeLink();
     }
 
     @Override
