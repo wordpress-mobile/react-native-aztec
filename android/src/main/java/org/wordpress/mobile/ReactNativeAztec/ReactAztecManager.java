@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
@@ -47,6 +48,9 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     private static final int FOCUS_TEXT_INPUT = 1;
     private static final int BLUR_TEXT_INPUT = 2;
     private static final int COMMAND_NOTIFY_APPLY_FORMAT = 100;
+    private static final int COMMAND_NOTIFY_SET_LINK = 101;
+    private static final int COMMAND_NOTIFY_REMOVE_LINK = 102;
+
 
     // we define the same codes in ReactAztecText as they have for ReactNative's TextInput, so
     // it's easier to handle focus between Aztec and TextInput instances on the same screen.
@@ -293,22 +297,14 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         view.shouldHandleOnBackspace = onBackspaceHandling;
     }
 
-    @ReactProp(name = "setLink", defaultBoolean = false)
-    public void setLink(final ReactAztecText view, String url, String title) {
-        view.link(url, title, false);
-    }
-
-    @ReactProp(name = "removeLink", defaultBoolean = false)
-    public void removeLink(final ReactAztecText view) {
-        view.removeLink();
-    }
-
     @Override
     public Map<String, Integer> getCommandsMap() {
         return MapBuilder.<String, Integer>builder()
                 .put("applyFormat", COMMAND_NOTIFY_APPLY_FORMAT)
                 .put("focusTextInput", mFocusTextInputCommandCode)
                 .put("blurTextInput", mBlurTextInputCommandCode)
+                .put("setLink", COMMAND_NOTIFY_SET_LINK)
+                .put("removeLink", COMMAND_NOTIFY_REMOVE_LINK)
                 .build();
     }
 
@@ -325,6 +321,16 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
             return;
         } else if (commandType == mBlurTextInputCommandCode) {
             parent.clearFocusFromJS();
+            return;
+        }
+        else if (commandType == COMMAND_NOTIFY_SET_LINK) {
+            final String url = args.getString(0);
+            final String title = args.getString(1);
+            parent.link(url, title, false);
+            return;
+        }
+        else if (commandType == COMMAND_NOTIFY_REMOVE_LINK) {
+            parent.removeLink();
             return;
         }
         super.receiveCommand(parent, commandType, args);
