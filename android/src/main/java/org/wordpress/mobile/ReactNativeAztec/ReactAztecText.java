@@ -27,8 +27,6 @@ import org.wordpress.aztec.plugins.IToolbarButton;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import kotlin.Triple;
-
 public class ReactAztecText extends AztecText {
 
     private final InputMethodManager mInputMethodManager;
