@@ -326,7 +326,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         else if (commandType == COMMAND_NOTIFY_SET_LINK) {
             final String url = args.getString(0);
             final String title = args.getString(1);
-            parent.link(url, title, false);
+            parent.link(url, title);
             return;
         }
         else if (commandType == COMMAND_NOTIFY_REMOVE_LINK) {

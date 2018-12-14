@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -253,7 +254,7 @@ public class ReactAztecText extends AztecText {
 
     private void propagateAttributesChange() {
         Triple<String, String, Boolean> triple = linkFormatter.getSelectedUrlWithAnchor();
-        Log.e("ivasavic", "test");
+
     }
 
     @Override
@@ -404,6 +405,13 @@ public class ReactAztecText extends AztecText {
         }
 
         return textFormats;
+    }
+
+    public void link (String url, String title) {
+        if (TextUtils.isEmpty(title)) {
+            title = getSelectedText();
+        }
+        link(url, title, false);
     }
 
     /**
