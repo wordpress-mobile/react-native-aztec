@@ -241,13 +241,12 @@ public class ReactAztecText extends AztecText {
     }
 
     private void propagateAttributesChange() {
-        Triple<String, String, Boolean> triple = linkFormatter.getSelectedUrlWithAnchor();
         if (shouldHandleActiveFormatAttributesChange) {
             ReactContext reactContext = (ReactContext) getContext();
             EventDispatcher eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
             ReactAztecFormattingAttributesChange reactAztecFormattingAttributesChange =
                     new ReactAztecFormattingAttributesChange(getId());
-            reactAztecFormattingAttributesChange.setLinkData(triple.getFirst());
+            reactAztecFormattingAttributesChange.setLinkData(linkFormatter.getSelectedUrlWithAnchor().getFirst());
             eventDispatcher.dispatchEvent(reactAztecFormattingAttributesChange);
         }
     }
