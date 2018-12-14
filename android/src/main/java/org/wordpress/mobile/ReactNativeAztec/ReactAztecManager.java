@@ -303,7 +303,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                 .put("applyFormat", COMMAND_NOTIFY_APPLY_FORMAT)
                 .put("focusTextInput", mFocusTextInputCommandCode)
                 .put("blurTextInput", mBlurTextInputCommandCode)
-                .put("setLink", COMMAND_NOTIFY_SET_LINK)
+                .put("setLinkData", COMMAND_NOTIFY_SET_LINK)
                 .put("removeLink", COMMAND_NOTIFY_REMOVE_LINK)
                 .build();
     }

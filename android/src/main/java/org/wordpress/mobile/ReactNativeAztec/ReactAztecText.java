@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.infer.annotation.Assertions;
@@ -227,17 +226,6 @@ public class ReactAztecText extends AztecText {
                     )
             );
         }
-
-        if (shouldHandleActiveFormatAttributesChange) {
-            ReactContext reactContext = (ReactContext) getContext();
-            EventDispatcher eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
-//            eventDispatcher.dispatchEvent(
-//                    new ReactAztecFormattingAttributesChange(
-//                            getId(),
-//                            formattingOptions.toArray(new String[formattingOptions.size()])
-//                    )
-//            );
-        }
     }
 
     private void propagateSelectionChanges(int selStart, int selEnd) {
@@ -254,7 +242,14 @@ public class ReactAztecText extends AztecText {
 
     private void propagateAttributesChange() {
         Triple<String, String, Boolean> triple = linkFormatter.getSelectedUrlWithAnchor();
-
+        if (shouldHandleActiveFormatAttributesChange) {
+            ReactContext reactContext = (ReactContext) getContext();
+            EventDispatcher eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
+            ReactAztecFormattingAttributesChange reactAztecFormattingAttributesChange =
+                    new ReactAztecFormattingAttributesChange(getId());
+            reactAztecFormattingAttributesChange.setLinkData(triple.getFirst());
+            eventDispatcher.dispatchEvent(reactAztecFormattingAttributesChange);
+        }
     }
 
     @Override
