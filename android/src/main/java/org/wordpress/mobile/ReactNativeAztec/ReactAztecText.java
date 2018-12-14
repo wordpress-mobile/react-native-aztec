@@ -412,6 +412,7 @@ public class ReactAztecText extends AztecText {
             title = getSelectedText();
         }
         link(url, title, false);
+        applyFormat("link");
     }
 
     /**
