@@ -10,14 +10,20 @@ class RCTAztecView: Aztec.TextView {
     @objc var onBlur: RCTBubblingEventBlock? = nil
     @objc var onContentSizeChange: RCTBubblingEventBlock? = nil
     @objc var onSelectionChange: RCTBubblingEventBlock? = nil
-    @objc var onActiveFormatsChange: RCTBubblingEventBlock? = nil
-    @objc var onActiveFormatAttributesChange: RCTBubblingEventBlock? = nil
     @objc var blockType: NSDictionary? = nil {
         didSet {
             guard let block = blockType, let tag = block["tag"] as? String else {
                 return
             }
             blockModel = BlockModel(tag: tag)
+        }
+    }
+    @objc var activeFormats: NSSet? = nil {
+        didSet {
+            let currentTypingAttributes = formattingIdentifiersForTypingAttributes()
+            for (key, value) in formatStringMap where currentTypingAttributes.contains(key) != activeFormats?.contains(value) {
+                    apply(format: value)
+            }
         }
     }
 
@@ -215,35 +221,6 @@ class RCTAztecView: Aztec.TextView {
         }
     }
 
-    @objc
-    func setLink(with url: String, and title: String?) {
-        guard let url = URL(string: url) else {
-            return
-        }
-        if let title = title {
-            setLink(url, title: title, inRange: selectedRange)
-        } else {
-            setLink(url, inRange: selectedRange)
-        }
-    }
-
-    @objc
-    func removeLink() {
-        guard let expandedRange = linkFullRange(forRange: selectedRange) else {
-            return
-        }
-        removeLink(inRange: expandedRange)
-    }
-
-    func linkAttributes() -> [String: Any] {
-        var attributes: [String: Any] = ["isActive": false]
-        if let expandedRange = linkFullRange(forRange: selectedRange) {
-            attributes["url"] = linkURL(forRange: expandedRange)?.absoluteString ?? ""
-            attributes["isActive"] = true
-        }
-        return attributes
-    }
-
     func forceTypingAttributesIfNeeded() {
         if let formatHandler = HeadingBlockFormatHandler(block: blockModel) {
             formatHandler.forceTypingFormat(on: self)
@@ -259,27 +236,6 @@ class RCTAztecView: Aztec.TextView {
         }
     }
 
-    func propagateFormatChanges() {
-        guard let onActiveFormatsChange = onActiveFormatsChange else {
-            return
-        }
-        let identifiers: Set<FormattingIdentifier>
-        if selectedRange.length > 0 {
-            identifiers = formattingIdentifiersSpanningRange(selectedRange)
-        } else {
-            identifiers = formattingIdentifiersForTypingAttributes()
-        }
-        let formats = identifiers.compactMap { formatStringMap[$0] }
-        onActiveFormatsChange(["formats": formats])
-    }
-
-    func propagateAttributesChanges() {
-        let attributes: [String: [String: Any]] = [
-            "link": linkAttributes()
-        ]
-        onActiveFormatAttributesChange?(["attributes": attributes])
-    }
-
     func propagateSelectionChanges() {
         guard let onSelectionChange = onSelectionChange else {
             return
@@ -293,14 +249,11 @@ class RCTAztecView: Aztec.TextView {
 extension RCTAztecView: UITextViewDelegate {
 
     func textViewDidChangeSelection(_ textView: UITextView) {
-        propagateAttributesChanges()
-        propagateFormatChanges()
         propagateSelectionChanges()
     }
 
     func textViewDidChange(_ textView: UITextView) {
         forceTypingAttributesIfNeeded()
-        propagateFormatChanges()
         propagateContentChanges()
     }
 
