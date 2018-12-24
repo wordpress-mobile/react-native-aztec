@@ -22,7 +22,7 @@ class RCTAztecView: Aztec.TextView {
         didSet {
             let currentTypingAttributes = formattingIdentifiersForTypingAttributes()
             for (key, value) in formatStringMap where currentTypingAttributes.contains(key) != activeFormats?.contains(value) {
-                    apply(format: value)
+                toggleFormat(format: value)
             }
         }
     }
@@ -212,11 +212,12 @@ class RCTAztecView: Aztec.TextView {
 
     // MARK: - Formatting interface
 
-    @objc func apply(format: String) {
+    @objc func toggleFormat(format: String) {
+        let emptyRange = NSRange(location: selectedRange.location, length: 0)
         switch format {
-        case "bold": toggleBold(range: selectedRange)
-        case "italic": toggleItalic(range: selectedRange)
-        case "strikethrough": toggleStrikethrough(range: selectedRange)
+        case "bold": toggleBold(range: emptyRange)
+        case "italic": toggleItalic(range: emptyRange)
+        case "strikethrough": toggleStrikethrough(range: emptyRange)
         default: print("Format not recognized")
         }
     }
