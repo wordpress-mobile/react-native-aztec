@@ -27,6 +27,7 @@ class AztecView extends React.Component {
     onActiveFormatAttributesChange: PropTypes.func,
     onSelectionChange: PropTypes.func,
     onHTMLContentWithCursor: PropTypes.func,
+    blockType: PropTypes.object,
     ...ViewPropTypes, // include the default view properties
   }
 
@@ -147,6 +148,11 @@ class AztecView extends React.Component {
 
   focus = () => {
     TextInputState.focusTextInput(ReactNative.findNodeHandle(this));
+  }
+
+  isFocused = () => {
+    const focusedField = TextInputState.currentlyFocusedField();
+    return focusedField && ( focusedField === ReactNative.findNodeHandle(this) );
   }
 
   _onPress = (event) => {
