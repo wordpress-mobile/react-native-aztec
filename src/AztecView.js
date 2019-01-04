@@ -80,7 +80,7 @@ class AztecView extends React.Component {
     }
     const size = event.nativeEvent.contentSize;
     const { onContentSizeChange } = this.props;
-    onContentSizeChange(size);
+    onContentSizeChange( { target: event.target, ...size } );
   }
 
   _onEnter = (event) => {
