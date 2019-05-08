@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactNative, {requireNativeComponent, ViewPropTypes, UIManager, ColorPropType, TouchableWithoutFeedback} from 'react-native';
+import ReactNative, {requireNativeComponent, ViewPropTypes, UIManager, ColorPropType, TouchableWithoutFeedback, Platform} from 'react-native';
 import TextInputState from 'react-native/lib/TextInputState';
 
-const AztecManager = UIManager.RCTAztecView;
+const AztecManager = UIManager.getViewManagerConfig('RCTAztecView');
 
 class AztecView extends React.Component {
   selectionEndCaretY: number;
 
   static propTypes = {
+    activeFormats: PropTypes.array,
     isSelected: PropTypes.bool,
     disableGutenbergMode: PropTypes.bool,
+    deleteEnter: PropTypes.bool,
     text: PropTypes.object,
     placeholder: PropTypes.string,
     placeholderTextColor: ColorPropType,
@@ -24,12 +26,10 @@ class AztecView extends React.Component {
     onEnter: PropTypes.func,
     onBackspace: PropTypes.func,
     onScroll: PropTypes.func,
-    onActiveFormatsChange: PropTypes.func,
-    onActiveFormatAttributesChange: PropTypes.func,
     onSelectionChange: PropTypes.func,
     onHTMLContentWithCursor: PropTypes.func,
     onCaretVerticalPositionChange: PropTypes.func,
-    blockType: PropTypes.object,
+	blockType: PropTypes.object,	
     ...ViewPropTypes, // include the default view properties
   }
 
@@ -42,38 +42,8 @@ class AztecView extends React.Component {
     );
   }
 
-  applyFormat(format) {
-    this.dispatch(AztecManager.Commands.applyFormat, [format])
-  }
-
-  removeLink() {
-    this.dispatch(AztecManager.Commands.removeLink)
-  }
-
-  setLink(url, title) {
-    this.dispatch(AztecManager.Commands.setLink, [url, title])
-  }
-
   requestHTMLWithCursor() {
     this.dispatch(AztecManager.Commands.returnHTMLWithCursor)
-  }
-
-  _onActiveFormatsChange = (event) => {
-    if (!this.props.onActiveFormatsChange) {
-      return;
-    }
-    const formats = event.nativeEvent.formats;
-    const { onActiveFormatsChange } = this.props;
-    onActiveFormatsChange(formats);
-  }
-
-  _onActiveFormatAttributesChange = (event) => {
-    if (!this.props.onActiveFormatAttributesChange) {
-      return;
-    }
-    const attributes = event.nativeEvent.attributes;
-    const { onActiveFormatAttributesChange } = this.props;
-    onActiveFormatAttributesChange(attributes);
   }
 
   _onContentSizeChange = (event) => {
@@ -140,7 +110,7 @@ class AztecView extends React.Component {
     if ( this.props.onSelectionChange ) {
       const { selectionStart, selectionEnd, text } = event.nativeEvent;
       const { onSelectionChange } = this.props;
-      onSelectionChange( selectionStart, selectionEnd, text );
+      onSelectionChange( selectionStart, selectionEnd, text, event );
     }
 
     if ( this.props.onCaretVerticalPositionChange && 
@@ -165,27 +135,39 @@ class AztecView extends React.Component {
   }
 
   _onPress = (event) => {
-    this.focus(event); // Call to move the focus in RN way (TextInputState)
-    this._onFocus(event); // Check if there are listeners set on the focus event
+	if ( ! this.isFocused() ) {
+		this.focus(event); // Call to move the focus in RN way (TextInputState)
+		this._onFocus(event); // Check if there are listeners set on the focus event
+	}
+  }
+
+  _onAztecFocus = (event) => {
+    // IMPORTANT: the onFocus events from Aztec are thrown away on Android as these are handled by onPress() in the upper level.
+    // It's necessary to do this otherwise onFocus may be set by `{...otherProps}` and thus the onPress + onFocus
+    // combination generate an infinite loop as described in https://github.com/wordpress-mobile/gutenberg-mobile/issues/302
+    // For iOS, this is necessary to let the system know when Aztec was focused programatically.
+    if ( Platform.OS == 'ios' ) {
+      this._onPress(event);
+    }
   }
 
   render() {
-    const { onActiveFormatsChange, ...otherProps } = this.props    
+    const { onActiveFormatsChange, onFocus, ...otherProps } = this.props
     return (
       <TouchableWithoutFeedback onPress={ this._onPress }>
-        <RCTAztecView {...otherProps}
-          onActiveFormatsChange={ this._onActiveFormatsChange }
-          onActiveFormatAttributesChange={ this._onActiveFormatAttributesChange }
+        <RCTAztecView
+          {...otherProps}
           onContentSizeChange = { this._onContentSizeChange }
           onHTMLContentWithCursor = { this._onHTMLContentWithCursor }
           onSelectionChange = { this._onSelectionChange }
-          onEnter = { this._onEnter }
+          onEnter = { this.props.onEnter && this._onEnter }
+          deleteEnter = { this.props.deleteEnter }
           // IMPORTANT: the onFocus events are thrown away as these are handled by onPress() in the upper level.
           // It's necessary to do this otherwise onFocus may be set by `{...otherProps}` and thus the onPress + onFocus
           // combination generate an infinite loop as described in https://github.com/wordpress-mobile/gutenberg-mobile/issues/302
-          onFocus = { () => {} } 
+          onFocus = { this._onAztecFocus } 
           onBlur = { this._onBlur }
-          onBackspace = { this._onBackspace }
+		      onBackspace = { this._onBackspace }
         />
       </TouchableWithoutFeedback>
     );

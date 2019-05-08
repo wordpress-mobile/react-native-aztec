@@ -5,8 +5,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -44,6 +44,8 @@ import org.wordpress.aztec.plugins.wpcomments.WordPressCommentsPlugin;
 import org.wordpress.aztec.plugins.wpcomments.toolbar.MoreToolbarButton;
 
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
 
@@ -51,7 +53,6 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
 
     private static final int FOCUS_TEXT_INPUT = 1;
     private static final int BLUR_TEXT_INPUT = 2;
-    private static final int COMMAND_NOTIFY_APPLY_FORMAT = 100;
     private static final int UNSET = -1;
 
     // we define the same codes in ReactAztecText as they have for ReactNative's TextInput, so
@@ -61,6 +62,8 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     private int mBlurTextInputCommandCode = BLUR_TEXT_INPUT; // pre-init
 
     private static final String TAG = "ReactAztecText";
+
+    private static final String BLOCK_TYPE_TAG_KEY = "tag";
 
     public ReactAztecManager() {
         initializeFocusAndBlurCommandCodes();
@@ -131,6 +134,11 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                                 "phasedRegistrationNames",
                                 MapBuilder.of("bubbled", "onBackspace")))
                 .put(
+                        "topTextInputPaste",
+                        MapBuilder.of(
+                                "phasedRegistrationNames",
+                                MapBuilder.of("bubbled", "onPaste")))
+                .put(
                         "topFocus",
                         MapBuilder.of(
                                 "phasedRegistrationNames",
@@ -160,23 +168,47 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     @ReactProp(name = "text")
     public void setText(ReactAztecText view, ReadableMap inputMap) {
         if (!inputMap.hasKey("eventCount")) {
-            setTextfromJS(view, inputMap.getString("text"));
+            setTextfromJS(view, inputMap.getString("text"), inputMap.getMap("selection"));
         } else {
             // Don't think there is necessity of this branch, but justin case we want to
             // force a 2nd setText from JS side to Native, just set a high eventCount
             int eventCount = inputMap.getInt("eventCount");
+
             if (view.mNativeEventCount < eventCount) {
-                setTextfromJS(view, inputMap.getString("text"));
+                setTextfromJS(view, inputMap.getString("text"), inputMap.getMap("selection"));
             }
         }
     }
 
-    private void setTextfromJS(ReactAztecText view, String text) {
+    private void setTextfromJS(ReactAztecText view, String text, @Nullable ReadableMap selection) {
         view.setIsSettingTextFromJS(true);
+        view.disableOnSelectionListener();
         view.fromHtml(text, true);
+        view.enableOnSelectionListener();
         view.setIsSettingTextFromJS(false);
+        updateSelectionIfNeeded(view, selection);
     }
 
+    private void updateSelectionIfNeeded(ReactAztecText view, @Nullable ReadableMap selection) {
+        if ( selection != null ) {
+            int start = selection.getInt("start");
+            int end = selection.getInt("end");
+            view.setSelection(start, end);
+        }
+    }
+
+    @ReactProp(name = "activeFormats", defaultBoolean = false)
+    public void setActiveFormats(final ReactAztecText view, @Nullable ReadableArray activeFormats) {
+        if (activeFormats != null) {
+            String[] activeFormatsArray = new String[activeFormats.size()];
+            for (int i = 0; i < activeFormats.size(); i++) {
+                activeFormatsArray[i] = activeFormats.getString(i);
+            }
+            view.setActiveFormats(Arrays.asList(activeFormatsArray));
+        } else {
+            view.setActiveFormats(new ArrayList<String>());
+        }
+    }
 
     /*
      The code below was taken from the class ReactTextInputManager
@@ -272,6 +304,13 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         view.setTextColor(newColor);
     }
 
+    @ReactProp(name = "blockType")
+    public void setBlockType(ReactAztecText view, ReadableMap inputMap) {
+        if (inputMap.hasKey(BLOCK_TYPE_TAG_KEY)) {
+            view.setTagName(inputMap.getString(BLOCK_TYPE_TAG_KEY));
+        }
+    }
+
     @ReactProp(name = "placeholder")
     public void setPlaceholder(ReactAztecText view, @Nullable String placeholder) {
         view.setHint(placeholder);
@@ -321,7 +360,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
             view.setImageGetter(new GlideImageLoader(view.getContext()));
             view.setVideoThumbnailGetter(new GlideVideoThumbnailLoader(view.getContext()));
             // we need to restart the editor now
-            String content = view.toHtml(false);
+            String content = view.toHtml(view.getText(), false);
             view.fromHtml(content, false);
         }
     }
@@ -344,11 +383,6 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         } else {
             view.setContentSizeWatcher(null);
         }
-    }
-
-    @ReactProp(name = "onActiveFormatsChange", defaultBoolean = false)
-    public void setOnActiveFormatsChange(final ReactAztecText view, boolean onActiveFormatsChange) {
-        view.shouldHandleActiveFormatsChange = onActiveFormatsChange;
     }
 
     @ReactProp(name = "onSelectionChange", defaultBoolean = false)
@@ -375,10 +409,19 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         view.shouldHandleOnBackspace = onBackspaceHandling;
     }
 
+    @ReactProp(name = "onPaste", defaultBoolean = false)
+    public void setOnPasteHandling(final ReactAztecText view, boolean onPasteHandling) {
+        view.shouldHandleOnPaste = onPasteHandling;
+    }
+
+    @ReactProp(name = "deleteEnter", defaultBoolean = false)
+    public void setShouldDeleteEnter(final ReactAztecText view, boolean shouldDeleteEnter) {
+        view.shouldDeleteEnter = shouldDeleteEnter;
+    }
+
     @Override
     public Map<String, Integer> getCommandsMap() {
         return MapBuilder.<String, Integer>builder()
-                .put("applyFormat", COMMAND_NOTIFY_APPLY_FORMAT)
                 .put("focusTextInput", mFocusTextInputCommandCode)
                 .put("blurTextInput", mBlurTextInputCommandCode)
                 .build();
@@ -387,12 +430,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     @Override
     public void receiveCommand(final ReactAztecText parent, int commandType, @Nullable ReadableArray args) {
         Assertions.assertNotNull(parent);
-        if (commandType == COMMAND_NOTIFY_APPLY_FORMAT) {
-            final String format = args.getString(0);
-            Log.d(TAG, String.format("Apply format: %s", format));
-            parent.applyFormat(format);
-            return;
-        } else if (commandType == mFocusTextInputCommandCode) {
+        if (commandType == mFocusTextInputCommandCode) {
             parent.requestFocusFromJS();
             return;
         } else if (commandType == mBlurTextInputCommandCode) {
@@ -422,11 +460,11 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                             eventDispatcher.dispatchEvent(
                                     new ReactAztecEndEditingEvent(
                                             editText.getId(),
-                                            editText.toHtml(false)));
+                                            editText.toHtml(editText.getText(), false)));
                         }
                     }
                 });
-
+        
         // Don't think we need to add setOnEditorActionListener here (intercept Enter for example), but
         // in case check ReactTextInputManager
     }
@@ -465,21 +503,41 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                 return;
             }
 
-            // The event that contains the event counter and updates it must be sent first.
-            // TODO: t7936714 merge these events
-            mEventDispatcher.dispatchEvent(
-                    new ReactTextChangedEvent(
-                            mEditText.getId(),
-                            mEditText.toHtml(false),
-                            mEditText.incrementAndGetEventCounter()));
+            // if the "Enter" handling is underway, don't sent text change events. The ReactAztecEnterEvent will have
+            // the text (minus the Enter char itself).
+            if (!mEditText.isEnterPressedUnderway()) {
+                int currentEventCount = mEditText.incrementAndGetEventCounter();
+                // The event that contains the event counter and updates it must be sent first.
+                // TODO: t7936714 merge these events
+                mEventDispatcher.dispatchEvent(
+                        new ReactTextChangedEvent(
+                                mEditText.getId(),
+                                mEditText.toHtml(mEditText.getText(), false),
+                                currentEventCount));
 
-            mEventDispatcher.dispatchEvent(
-                    new ReactTextInputEvent(
-                            mEditText.getId(),
-                            newText,
-                            oldText,
-                            start,
-                            start + before));
+                mEventDispatcher.dispatchEvent(
+                        new ReactTextInputEvent(
+                                mEditText.getId(),
+                                newText,
+                                oldText,
+                                start,
+                                start + before));
+            }
+
+
+            if (mPreviousText.length() == 0
+                    && !TextUtils.isEmpty(newText)
+                    && !TextUtils.isEmpty(mEditText.getTagName())
+                    && mEditText.getSelectedStyles().isEmpty()) {
+
+                // Some block types (e.g. header block ) need to be created with default style  (e.g. h2)
+                // In order to achieve that, we need to toggle formatting with proper style,
+                // otherwise header block won't be created with style, it will be presented as plain text
+                ReactAztecTextFormatEnum reactAztecTextFormat = ReactAztecTextFormatEnum.get(mEditText.getTagName());
+                if (reactAztecTextFormat != null) {
+                    mEditText.toggleFormatting(reactAztecTextFormat.getAztecTextFormat());
+                }
+            }
         }
 
         @Override
