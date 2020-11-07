@@ -1,7 +1,7 @@
 {
   "name": "react-native-aztec",
   "version": "0.1.5",
-  "license": "GPL-2.0",
+  "license": "(MPL-2.0 OR GPL-2.0)",
   "scripts": {
     "install-aztec-ios": "cd ./ios && carthage bootstrap --platform iOS --cache-builds",
     "clean": "yarn clean-watchman; yarn clean-node; yarn clean-react; yarn clean-metro; yarn clean-jest;",
