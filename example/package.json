@@ -26,10 +26,10 @@
 	"@babel/core": "^7.1.0",
 	"babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.6.0",
-    "babel-plugin-module-resolver": "3.1.1",    
+    "babel-plugin-module-resolver": "3.1.1",
     "eslint": "4.0.0",
     "jest": "23.6.0",
     "react-test-renderer": "16.5.0"
   },
-  "license": "GPL-2.0"
+  "license": "(MPL-2.0 OR GPL-2.0)"
 }
