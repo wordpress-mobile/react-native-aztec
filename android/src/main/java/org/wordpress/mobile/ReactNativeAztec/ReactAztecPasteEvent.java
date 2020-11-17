@@ -1,29 +1,31 @@
 package org.wordpress.mobile.ReactNativeAztec;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.Event;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 /**
- * Event emitted by Aztec native view when selection changes.
+ * Event emitted by Aztec native view when paste is detected.
  */
-class ReactAztecSelectionChangeEvent extends Event<ReactAztecSelectionChangeEvent> {
+class ReactAztecPasteEvent extends Event<ReactAztecPasteEvent> {
 
-    private static final String EVENT_NAME = "topSelectionChange";
+    private static final String EVENT_NAME = "topTextInputPaste";
 
-    private String mText;
+    private String mCurrentContent;
     private int mSelectionStart;
     private int mSelectionEnd;
-    private int mEventCount;
+    private String mPastedText;
+    private String mPastedHtml;
 
-    public ReactAztecSelectionChangeEvent(int viewId, String text, int selectionStart, int selectionEnd, int eventCount) {
+    public ReactAztecPasteEvent(int viewId, String currentContent, int selectionStart,
+                                int selectionEnd, String pastedText, String pastedHtml) {
         super(viewId);
-        mText = text;
+        mCurrentContent = currentContent;
         mSelectionStart = selectionStart;
         mSelectionEnd = selectionEnd;
-        mEventCount = eventCount;
+        mPastedText = pastedText;
+        mPastedHtml = pastedHtml;
     }
 
     @Override
@@ -44,10 +46,11 @@ class ReactAztecSelectionChangeEvent extends Event<ReactAztecSelectionChangeEven
     private WritableMap serializeEventData() {
         WritableMap eventData = Arguments.createMap();
         eventData.putInt("target", getViewTag());
-        eventData.putString("text", mText);
+        eventData.putString("currentContent", mCurrentContent);
         eventData.putInt("selectionStart", mSelectionStart);
         eventData.putInt("selectionEnd", mSelectionEnd);
-        eventData.putInt("eventCount", mEventCount);
+        eventData.putString("pastedText", mPastedText);
+        eventData.putString("pastedHtml", mPastedHtml);
         return eventData;
     }
 }

@@ -6,45 +6,30 @@ public class RCTAztecViewManager: RCTViewManager {
 
     public var attachmentDelegate: Aztec.TextViewAttachmentDelegate?
     public var imageProvider: Aztec.TextViewAttachmentImageProvider?
+    public lazy var unsupportedHTMLImageProvider = {
+        Aztec.HTMLAttachmentRenderer(font: defaultFont)
+    }()
 
     public override static func requiresMainQueueSetup() -> Bool {
         return true
     }
 
     @objc
-    func applyFormat(_ node: NSNumber, format: String) {
-        executeBlock({ (aztecView) in
-            aztecView.apply(format: format)
-        }, onNode: node)
-    }
-
-    @objc
-    func removeLink(_ node: NSNumber) {
-        executeBlock({ (aztecView) in
-            aztecView.removeLink()
-        }, onNode: node)
-    }
-
-    @objc
-    func setLink(_ node: NSNumber, url: String, title: String?) {
-        executeBlock({ (aztecView) in
-            aztecView.setLink(with: url, and: title)
-        }, onNode: node)
-    }
-
-    @objc
     public override func view() -> UIView {
         let view = RCTAztecView(
             defaultFont: defaultFont,
-            defaultParagraphStyle: .default,
+            defaultParagraphStyle: defaultParagrahStyle,
             defaultMissingImage: UIImage())
 
         view.isScrollEnabled = false
 
         view.textAttachmentDelegate = attachmentDelegate
+        
         if let imageProvider = imageProvider {
             view.registerAttachmentImageProvider(imageProvider)
         }
+        
+        view.registerAttachmentImageProvider(unsupportedHTMLImageProvider)
 
         return view
     }
@@ -59,7 +44,7 @@ public class RCTAztecViewManager: RCTViewManager {
         }
     }
 
-    private var defaultFont: UIFont {
+    private var defaultFont: UIFont {        
         if let font = UIFont(name: "NotoSerif", size: 16) {
             return font
         }
@@ -74,5 +59,11 @@ public class RCTAztecViewManager: RCTViewManager {
         }
 
         return defaultFont
+    }
+    private var defaultParagrahStyle: ParagraphStyle {
+        let defaultStyle = ParagraphStyle.default
+        defaultStyle.textListParagraphSpacing = 5
+        defaultStyle.textListParagraphSpacingBefore = 5
+        return defaultStyle
     }
 }

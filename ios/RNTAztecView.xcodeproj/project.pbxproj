@@ -12,8 +12,8 @@
 		7ECFA94221C39BBB00FC131B /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFA94121C39BBB00FC131B /* BlockModel.swift */; };
 		F121467D20ED2F81003DD17B /* RCTAztecViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F121467C20ED2F81003DD17B /* RCTAztecViewManager.m */; };
 		F13BF4A020ECF5450047D3F9 /* RCTAztecViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BF49F20ECF5450047D3F9 /* RCTAztecViewManager.swift */; };
-		F166A38020EE6DF3008E7C9F /* Aztec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F166A37B20EE6DD7008E7C9F /* Aztec.framework */; };
 		F1A879D020EE90C000FABD31 /* RCTAztecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A879CF20EE90C000FABD31 /* RCTAztecView.swift */; };
+		FF0DC1C523CDD21D0060074D /* Aztec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F166A37B20EE6DD7008E7C9F /* Aztec.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F166A38020EE6DF3008E7C9F /* Aztec.framework in Frameworks */,
+				FF0DC1C523CDD21D0060074D /* Aztec.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,11 +163,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = "Automattic Inc.";
+				ORGANIZATIONNAME = WordPress;
 				TargetAttributes = {
 					F145CFC52087D16A006C159A = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1110;
 					};
 				};
 			};
@@ -287,7 +287,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -341,7 +341,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -360,6 +360,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,7 +371,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RNTAztecView/RCTAztecView-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -385,6 +386,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,7 +396,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RNTAztecView/RCTAztecView-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
