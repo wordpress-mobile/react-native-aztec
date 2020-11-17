@@ -4,7 +4,7 @@
   "description": "Aztec view for react-native.",
   "private": true,
   "author": "The WordPress Contributors",
-  "license": "GPL-2.0-or-later",
+  "license": "(MPL-2.0 OR GPL-2.0)",
   "keywords": [
     "wordpress",
     "react-native"

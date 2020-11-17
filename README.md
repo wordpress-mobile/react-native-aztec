@@ -14,12 +14,12 @@ import RCTAztecView from '@wordpress/react-native-aztec';
 
 const RichText = () => (
 	<>
-		<RCTAztecView 
+		<RCTAztecView
 			text={ {
 				text: "<h1>This is a Heading</h1>",
 				selection: { start:0, end: 0 }
-			}} 
-		/>			
+			}}
+		/>
 	</>
 );
 ```
@@ -38,7 +38,7 @@ Object with current HTML string to make editable and selection/caret position.
   - eventCount: if it has a value it's because this change was originated from the native event.
 - Required: Yes
 
-### blockType 
+### blockType
 
 The block type, should contain a tagName prop that indicates what is the HTML tag that this editor displays.
 
@@ -117,7 +117,7 @@ The font style (bold, italic, ) that will be used as default to display the HTML
 - Type: `String`
 - Required: No
 
-### deleteEnter 
+### deleteEnter
 
 When active removes the new line resulting from an enter keypress when that enter keypress is splitting the block.
 
@@ -230,7 +230,7 @@ RCTAztecView adds the following custom behaviours to the TextView class:
    - detection any of triggerKeyCodes
  - Sets the `characterToReplaceLastEmptyLine` property in the HTMLConverter to be zero width space character to avoid the insertion of a newline at the end of the text blocks
  - Disables the `shouldCollapseSpaces` flag in the HTMLConverter in order to maintain all spaces inserted by the user
-  
+
 ### Android
 
 Android uses a native [`ReactAztecText`](https://github.com/WordPress/gutenberg/blob/7532a485b400f86638145b71f94f6f717e5add25/packages/react-native-aztec/android/src/main/java/org/wordpress/mobile/ReactNativeAztec/ReactAztecText.java#L50)
@@ -241,4 +241,6 @@ view manager.
 
 # License
 
-GPL v2
+This work is dual licensed under the [Mozilla Public License version 2.0 (MPL-2.0)](MPL-2.0.md) or the [GNU General Public License v2.0 or later (GPL-2.0)](GPL-2.0.md).
+
+You can choose between one of them, or both if you use this work.
