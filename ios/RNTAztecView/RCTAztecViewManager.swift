@@ -40,12 +40,23 @@ public class RCTAztecViewManager: RCTViewManager {
             defaultMissingImage: UIImage())
 
         view.isScrollEnabled = true
+        
+        let defaultMediaProvider = MediaProvider()
+        
+        if (attachmentDelegate == nil) {
+            attachmentDelegate = defaultMediaProvider
+        }
+        
+        if (imageProvider == nil) {
+            imageProvider = defaultMediaProvider
+        }
 
         view.textAttachmentDelegate = attachmentDelegate
+        
         if let imageProvider = imageProvider {
             view.registerAttachmentImageProvider(imageProvider)
         }
-
+    
         return view
     }
 
