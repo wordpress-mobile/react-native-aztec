@@ -44,6 +44,8 @@ class RCTAztecView: Aztec.TextView {
     override init(defaultFont: UIFont, defaultParagraphStyle: ParagraphStyle, defaultMissingImage: UIImage) {
         super.init(defaultFont: defaultFont, defaultParagraphStyle: defaultParagraphStyle, defaultMissingImage: defaultMissingImage)
         commonInit()
+        
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -87,9 +89,9 @@ class RCTAztecView: Aztec.TextView {
     // MARK: - Edits
     
     open override func insertText(_ text: String) {
-        guard !interceptEnter(text) else {
-            return
-        }
+//        guard !interceptEnter(text) else {
+//            return
+//        }
 
         super.insertText(text)
         updatePlaceholderVisibility()
