@@ -39,7 +39,7 @@ public class RCTAztecViewManager: RCTViewManager {
             defaultParagraphStyle: .default,
             defaultMissingImage: UIImage())
 
-        view.isScrollEnabled = false
+        view.isScrollEnabled = true
 
         view.textAttachmentDelegate = attachmentDelegate
         if let imageProvider = imageProvider {
