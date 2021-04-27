@@ -41,6 +41,8 @@ public class RCTAztecViewManager: RCTViewManager {
 
         view.isScrollEnabled = true
         
+        view.autocorrectionType = .no
+        
         let defaultMediaProvider = MediaProvider()
         
         if (attachmentDelegate == nil) {
