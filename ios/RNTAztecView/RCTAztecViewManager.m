@@ -21,5 +21,6 @@ RCT_EXPORT_VIEW_PROPERTY(placeholderTextColor, UIColor)
 RCT_EXTERN_METHOD(applyFormat:(nonnull NSNumber *)node format:(NSString *)format)
 RCT_EXTERN_METHOD(setLink:(nonnull NSNumber *)node url:(nonnull NSString *)url title:(nullable NSString *)title)
 RCT_EXTERN_METHOD(removeLink:(nonnull NSNumber *)node)
+RCT_EXTERN_METHOD(hideKeyboard:(nonnull NSNumber *)node)
 
 @end

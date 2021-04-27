@@ -54,6 +54,10 @@ class AztecView extends React.Component {
     this.dispatch(AztecManager.Commands.setLink, [url, title])
   }
 
+  hideKeyboard() {
+    this.dispatch(AztecManager.Commands.hideKeyboard)
+  }
+
   requestHTMLWithCursor() {
     this.dispatch(AztecManager.Commands.returnHTMLWithCursor)
   }

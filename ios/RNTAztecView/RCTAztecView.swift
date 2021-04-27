@@ -236,6 +236,11 @@ class RCTAztecView: Aztec.TextView {
         }
         removeLink(inRange: expandedRange)
     }
+    
+    @objc
+    func hideKeyboard() {
+        self.resignFirstResponder()
+    }
 
     func linkAttributes() -> [String: Any] {
         var attributes: [String: Any] = ["isActive": false]

@@ -31,6 +31,13 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.setLink(with: url, and: title)
         }, onNode: node)
     }
+    
+    @objc
+    func hideKeyboard(_ node: NSNumber) {
+        executeBlock({ (aztecView) in
+            aztecView.hideKeyboard()
+        }, onNode: node)
+    }
 
     @objc
     public override func view() -> UIView {
