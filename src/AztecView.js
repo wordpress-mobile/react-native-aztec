@@ -197,6 +197,4 @@ class AztecView extends React.Component {
   }
 }
 
-const RCTAztecView = requireNativeComponent('RCTAztecView', AztecView);
-
 export default AztecView
