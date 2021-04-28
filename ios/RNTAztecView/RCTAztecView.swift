@@ -37,6 +37,7 @@ class RCTAztecView: Aztec.TextView {
     private let formatStringMap: [FormattingIdentifier: String] = [
         .bold: "bold",
         .italic: "italic",
+        .underline: "underline",
         .strikethrough: "strikethrough",
         .link: "link",
     ]
@@ -212,6 +213,7 @@ class RCTAztecView: Aztec.TextView {
         switch format {
         case "bold": toggleBold(range: selectedRange)
         case "italic": toggleItalic(range: selectedRange)
+        case "underline": toggleUnderline(range: selectedRange)
         case "strikethrough": toggleStrikethrough(range: selectedRange)
         default: print("Format not recognized")
         }
