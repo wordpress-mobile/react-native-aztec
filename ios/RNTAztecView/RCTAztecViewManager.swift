@@ -4,9 +4,9 @@ import Foundation
 @objc (RCTAztecViewManager)
 public class RCTAztecViewManager: RCTViewManager {
 
-    public var attachmentDelegate: Aztec.TextViewAttachmentDelegate?
-    public var imageProvider: Aztec.TextViewAttachmentImageProvider?
-
+    public static var attachmentDelegate: Aztec.TextViewAttachmentDelegate?
+    public static var imageProvider: Aztec.TextViewAttachmentImageProvider?
+    
     public override static func requiresMainQueueSetup() -> Bool {
         return true
     }
@@ -52,17 +52,17 @@ public class RCTAztecViewManager: RCTViewManager {
         
         let defaultMediaProvider = MediaProvider()
         
-        if (attachmentDelegate == nil) {
-            attachmentDelegate = defaultMediaProvider
+        if (RCTAztecViewManager.attachmentDelegate == nil) {
+            RCTAztecViewManager.attachmentDelegate = defaultMediaProvider
         }
         
-        if (imageProvider == nil) {
-            imageProvider = defaultMediaProvider
+        if (RCTAztecViewManager.imageProvider == nil) {
+            RCTAztecViewManager.imageProvider = defaultMediaProvider
         }
 
-        view.textAttachmentDelegate = attachmentDelegate
+        view.textAttachmentDelegate = RCTAztecViewManager.attachmentDelegate
         
-        if let imageProvider = imageProvider {
+        if let imageProvider = RCTAztecViewManager.imageProvider {
             view.registerAttachmentImageProvider(imageProvider)
         }
     
