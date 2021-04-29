@@ -20,6 +20,20 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.apply(format: format)
         }, onNode: node)
     }
+    
+    @objc
+    func focusTextInput(_ node: NSNumber) {
+        executeBlock({ (aztecView) in
+            aztecView.becomeFirstResponder()
+        }, onNode: node)
+    }
+
+    @objc
+    func blurTextInput(_ node: NSNumber) {
+        executeBlock({ (aztecView) in
+            aztecView.hideKeyboard()
+        }, onNode: node)
+    }
 
     @objc
     func removeLink(_ node: NSNumber) {
@@ -35,13 +49,6 @@ public class RCTAztecViewManager: RCTViewManager {
         }, onNode: node)
     }
     
-    @objc
-    func hideKeyboard(_ node: NSNumber) {
-        executeBlock({ (aztecView) in
-            aztecView.hideKeyboard()
-        }, onNode: node)
-    }
-
     @objc
     public override func view() -> UIView {
         if (RCTAztecViewManager.defaultFont == nil) {
@@ -70,6 +77,10 @@ public class RCTAztecViewManager: RCTViewManager {
         
         if let imageProvider = RCTAztecViewManager.imageProvider {
             view.registerAttachmentImageProvider(imageProvider)
+        }
+        
+        if #available(iOS 13, *) {
+            view.overrideUserInterfaceStyle = .light
         }
     
         return view

@@ -43,6 +43,8 @@ class AztecView extends React.Component {
     );
   }
 
+  _inputRef = null;
+
   applyFormat(format) {
     this.dispatch(AztecManager.Commands.applyFormat, [format])
   }
@@ -55,8 +57,12 @@ class AztecView extends React.Component {
     this.dispatch(AztecManager.Commands.setLink, [url, title])
   }
 
-  hideKeyboard() {
-    this.dispatch(AztecManager.Commands.hideKeyboard)
+  focus() {
+    this.dispatch(AztecManager.Commands.focusTextInput)
+  }
+
+  blur() {
+    this.dispatch(AztecManager.Commands.blurTextInput)
   }
 
   requestHTMLWithCursor() {
@@ -156,14 +162,6 @@ class AztecView extends React.Component {
     }
   }
 
-  blur = () => {
-    TextInputState.blurTextInput(ReactNative.findNodeHandle(this));
-  }
-
-  focus = () => {
-    TextInputState.focusTextInput(ReactNative.findNodeHandle(this));
-  }
-
   isFocused = () => {
     const focusedField = TextInputState.currentlyFocusedField();
     return focusedField && ( focusedField === ReactNative.findNodeHandle(this) );
@@ -179,6 +177,7 @@ class AztecView extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={ this._onPress }>
         <RCTAztecView {...otherProps}
+          ref={ref => this._inputRef = ref}
           onActiveFormatsChange={ this._onActiveFormatsChange }
           onActiveFormatAttributesChange={ this._onActiveFormatAttributesChange }
           onContentSizeChange = { this._onContentSizeChange }
