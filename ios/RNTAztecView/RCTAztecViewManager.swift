@@ -7,6 +7,9 @@ public class RCTAztecViewManager: RCTViewManager {
     public static var attachmentDelegate: Aztec.TextViewAttachmentDelegate?
     public static var imageProvider: Aztec.TextViewAttachmentImageProvider?
     
+    @objc
+    public static var defaultFont: UIFont?
+    
     public override static func requiresMainQueueSetup() -> Bool {
         return true
     }
@@ -41,6 +44,9 @@ public class RCTAztecViewManager: RCTViewManager {
 
     @objc
     public override func view() -> UIView {
+        if (RCTAztecViewManager.defaultFont == nil) {
+            RCTAztecViewManager.defaultFont = UIFont(name: "Inter-Regular", size: 16.0);
+        }
         let view = RCTAztecView(
             defaultFont: defaultFont,
             defaultParagraphStyle: .default,
@@ -79,20 +85,20 @@ public class RCTAztecViewManager: RCTViewManager {
         }
     }
 
-    private var defaultFont: UIFont {
-        if let font = UIFont(name: "NotoSerif", size: 16) {
-            return font
-        }
+     private var defaultFont: UIFont {
+         if let font = UIFont(name: "NotoSerif", size: 16) {
+             return font
+         }
 
-        let defaultFont = UIFont.systemFont(ofSize: 16)
-        guard let url = Bundle.main.url(forResource: "NotoSerif-Regular", withExtension: "ttf") else {
-            return defaultFont
-        }
-        CTFontManagerRegisterFontsForURL(url as CFURL, CTFontManagerScope.process, nil)
-        if let font = UIFont(name: "NotoSerif", size: 16) {
-            return font
-        }
+         let defaultFont = UIFont.systemFont(ofSize: 16)
+         guard let url = Bundle.main.url(forResource: "NotoSerif-Regular", withExtension: "ttf") else {
+             return defaultFont
+         }
+         CTFontManagerRegisterFontsForURL(url as CFURL, CTFontManagerScope.process, nil)
+         if let font = UIFont(name: "NotoSerif", size: 16) {
+             return font
+         }
 
-        return defaultFont
-    }
+         return defaultFont
+     }
 }
