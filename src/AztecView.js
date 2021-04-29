@@ -137,7 +137,6 @@ class AztecView extends React.Component {
   
   _onBlur = (event) => {
     this.selectionEndCaretY = null;
-    TextInputState.blurTextInput(ReactNative.findNodeHandle(this));
 
     if (!this.props.onBlur) {
       return;
