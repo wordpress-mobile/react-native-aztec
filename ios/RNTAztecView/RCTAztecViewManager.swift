@@ -25,6 +25,9 @@ public class RCTAztecViewManager: RCTViewManager {
     func focusTextInput(_ node: NSNumber) {
         executeBlock({ (aztecView) in
             aztecView.becomeFirstResponder()
+            
+            let newPosition = aztecView.endOfDocument
+            aztecView.selectedTextRange = aztecView.textRange(from: newPosition, to: newPosition)
         }, onNode: node)
     }
 
@@ -34,7 +37,7 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.hideKeyboard()
         }, onNode: node)
     }
-
+    
     @objc
     func removeLink(_ node: NSNumber) {
         executeBlock({ (aztecView) in
