@@ -308,9 +308,20 @@ extension RCTAztecView: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        forceTypingAttributesIfNeeded()
-        propagateFormatChanges()
-        propagateContentChanges()
+//        forceTypingAttributesIfNeeded()
+//        propagateFormatChanges()
+//        propagateContentChanges()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.forceTypingAttributesIfNeeded()
+            self.propagateFormatChanges()
+            self.propagateContentChanges()
+        }
+
+        return true
     }
 
     func textViewDidBeginEditing(_ textView: UITextView) {
