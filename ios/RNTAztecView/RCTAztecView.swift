@@ -308,8 +308,8 @@ extension RCTAztecView: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-//        forceTypingAttributesIfNeeded()
-//        propagateFormatChanges()
+        forceTypingAttributesIfNeeded()
+        propagateFormatChanges()
 //        propagateContentChanges()
     }
     
