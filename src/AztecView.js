@@ -58,11 +58,18 @@ class AztecView extends React.Component {
   }
 
   focus() {
+  }
+
+  focusEndOfDocument() {
     this.dispatch(AztecManager.Commands.focusTextInput)
   }
 
   blur() {
     this.dispatch(AztecManager.Commands.blurTextInput)
+  }
+
+  setHTML(html) {
+    this.dispatch(AztecManager.Commands.setHTML, [html])
   }
 
   requestHTMLWithCursor() {
