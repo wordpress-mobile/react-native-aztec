@@ -30,6 +30,14 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.selectedTextRange = aztecView.textRange(from: newPosition, to: newPosition)
         }, onNode: node)
     }
+    
+    @objc
+    func setHTML(_ node: NSNumber, html: String) {
+        executeBlock({ (aztecView) in
+            aztecView.setHTML(html)
+            aztecView.updatePlaceholderVisibility()
+        }, onNode: node)
+    }
 
     @objc
     func blurTextInput(_ node: NSNumber) {
@@ -51,6 +59,8 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.setLink(with: url, and: title)
         }, onNode: node)
     }
+    
+    
     
     @objc
     public override func view() -> UIView {
