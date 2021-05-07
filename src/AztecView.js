@@ -34,13 +34,18 @@ class AztecView extends React.Component {
     ...ViewPropTypes, // include the default view properties
   }
 
-  dispatch(command, params) {
+  dispatch = (command, params) => {
     params = params || [];
-    UIManager.dispatchViewManagerCommand(
-                                          ReactNative.findNodeHandle(this),
-                                          command,
-                                          params,
-    );
+
+    try {
+      UIManager.dispatchViewManagerCommand(
+                                            ReactNative.findNodeHandle(this),
+                                            command,
+                                            params,
+      );
+    } catch(error) {
+      console.log({error})
+    }
   }
 
   _inputRef = null;
