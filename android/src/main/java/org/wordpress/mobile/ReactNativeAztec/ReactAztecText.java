@@ -2,11 +2,12 @@ package org.wordpress.mobile.ReactNativeAztec;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
+import android.text.Spannable;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
@@ -56,7 +57,7 @@ public class ReactAztecText extends AztecText {
         super(reactContext);
         this.setAztecKeyListener(new ReactAztecText.OnAztecKeyListener() {
             @Override
-            public boolean onEnterKey() {
+            public boolean onEnterKey(Spannable text, boolean firedAfterTextChanged, int selStart, int selEnd) {
                 if (shouldHandleOnEnter) {
                     return onEnter();
                 }
