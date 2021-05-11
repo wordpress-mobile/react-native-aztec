@@ -131,7 +131,14 @@ public class ReactAztecText extends AztecText {
         }*/
         setFocusableInTouchMode(true);
         boolean focused = super.requestFocus(direction, previouslyFocusedRect);
+
+        final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight();
+        if (scrollAmount > 0) {
+            this.scrollTo(0, scrollAmount);
+        }
+
         super.setSelection(this.length());
+
         showSoftKeyboard();
         return focused;
     }
