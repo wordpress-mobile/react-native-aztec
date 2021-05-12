@@ -206,6 +206,10 @@ public class ReactAztecText extends AztecText {
             if (currentStyle == AztecTextFormat.FORMAT_STRIKETHROUGH) {
                 formattingOptions.add("strikethrough");
             }
+
+            if (currentStyle == AztecTextFormat.FORMAT_UNDERLINE) {
+                formattingOptions.add("underline");
+            }
         }
 
         // Check if the same formatting event was already sent
@@ -342,6 +346,9 @@ public class ReactAztecText extends AztecText {
             break;
             case ("strikethrough"):
                 newFormats.add(AztecTextFormat.FORMAT_STRIKETHROUGH);
+            break;
+            case ("underline"):
+                newFormats.add(AztecTextFormat.FORMAT_UNDERLINE);
             break;
         }
 
