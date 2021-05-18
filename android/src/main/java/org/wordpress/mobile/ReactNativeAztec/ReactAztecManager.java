@@ -3,7 +3,7 @@ package org.wordpress.mobile.ReactNativeAztec;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -51,6 +51,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
 
     private static final int FOCUS_TEXT_INPUT = 1;
     private static final int BLUR_TEXT_INPUT = 2;
+    private static final int SET_HTML = 3;
     private static final int COMMAND_NOTIFY_APPLY_FORMAT = 100;
     private static final int UNSET = -1;
 
@@ -59,6 +60,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     // see https://github.com/wordpress-mobile/react-native-aztec/pull/79
     private int mFocusTextInputCommandCode = FOCUS_TEXT_INPUT; // pre-init
     private int mBlurTextInputCommandCode = BLUR_TEXT_INPUT; // pre-init
+    private int mSetHTMLCommandCode = SET_HTML;
 
     private static final String TAG = "ReactAztecText";
 
@@ -381,6 +383,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                 .put("applyFormat", COMMAND_NOTIFY_APPLY_FORMAT)
                 .put("focusTextInput", mFocusTextInputCommandCode)
                 .put("blurTextInput", mBlurTextInputCommandCode)
+                .put("setHTML", mSetHTMLCommandCode)
                 .build();
     }
 
@@ -397,6 +400,10 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
             return;
         } else if (commandType == mBlurTextInputCommandCode) {
             parent.clearFocusFromJS();
+            return;
+        } else if (commandType == mSetHTMLCommandCode) {
+            final String html = args.getString(0);
+            setTextfromJS(parent, html);
             return;
         }
         super.receiveCommand(parent, commandType, args);
