@@ -2,6 +2,8 @@ import Aztec
 import Foundation
 import UIKit
 
+var lastTimeShouldChangeCalled = 0.0;
+
 class RCTAztecView: Aztec.TextView {
     @objc var onBackspace: RCTBubblingEventBlock? = nil
     @objc var onChange: RCTBubblingEventBlock? = nil
@@ -310,10 +312,16 @@ extension RCTAztecView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         forceTypingAttributesIfNeeded()
         propagateFormatChanges()
-//        propagateContentChanges()
+
+        let nowTime = NSDate().timeIntervalSince1970
+        
+        if (nowTime - Double(lastTimeShouldChangeCalled) > 0.1) {
+            propagateContentChanges()
+        }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        lastTimeShouldChangeCalled = NSDate().timeIntervalSince1970
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.forceTypingAttributesIfNeeded()
