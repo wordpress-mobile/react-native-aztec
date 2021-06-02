@@ -60,9 +60,6 @@ public class ReactAztecText extends AztecText {
         this.setAztecKeyListener(new ReactAztecText.OnAztecKeyListener() {
             @Override
             public boolean onEnterKey(Spannable text, boolean firedAfterTextChanged, int selStart, int selEnd) {
-                if (shouldHandleOnEnter) {
-                    return onEnter();
-                }
                 return false;
             }
             @Override
