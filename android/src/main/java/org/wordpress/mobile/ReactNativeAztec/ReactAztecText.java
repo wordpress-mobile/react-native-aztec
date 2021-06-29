@@ -131,7 +131,7 @@ public class ReactAztecText extends AztecText {
 
         final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight();
         if (scrollAmount > 0) {
-            this.scrollTo(0, scrollAmount);
+            this.scrollTo(0, scrollAmount + 50);
         }
 
         super.setSelection(this.length());
