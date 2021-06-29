@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactNative, {requireNativeComponent, ViewPropTypes, UIManager, ColorPropType, TouchableWithoutFeedback} from 'react-native';
+import ReactNative, {Platform, ViewPropTypes, UIManager, ColorPropType, TouchableWithoutFeedback} from 'react-native';
 import TextInputState from 'react-native/Libraries/Components/TextInput/TextInputState';
 import RCTAztecView from './RCTAztecView';
 
@@ -77,6 +77,12 @@ class AztecView extends React.Component {
     this.dispatch(AztecManager.Commands.setHTML, [html])
   }
 
+  scrollToBottom() {
+    if (Platform.OS === 'android') {
+      this.dispatch(AztecManager.Commands.scrollToBottom);
+    }
+  }
+
   requestHTMLWithCursor() {
     this.dispatch(AztecManager.Commands.returnHTMLWithCursor)
   }
@@ -106,6 +112,8 @@ class AztecView extends React.Component {
     const size = event.nativeEvent.contentSize;
     const { onContentSizeChange } = this.props;
     onContentSizeChange(size);
+
+    this.scrollToBottom();
   }
 
   _onEnter = (event) => {
