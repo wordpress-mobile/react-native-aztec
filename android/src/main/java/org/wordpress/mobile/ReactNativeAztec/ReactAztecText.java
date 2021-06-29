@@ -140,6 +140,17 @@ public class ReactAztecText extends AztecText {
         return focused;
     }
 
+    public void scrollToBottom() {
+        final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight();
+
+        // only scroll if the user is already at the bottom.  ignore otherwise
+        if (scrollAmount > 0 && this.getSelectionStart() >= this.getText().toString().length() - 1) {
+            this.scrollTo(0, scrollAmount + 50);
+
+            super.setSelection(this.length());
+        }
+    }
+
     private boolean showSoftKeyboard() {
         return mInputMethodManager.showSoftInput(this, 0);
     }
