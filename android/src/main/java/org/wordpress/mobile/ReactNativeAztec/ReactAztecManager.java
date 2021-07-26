@@ -478,14 +478,6 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                 return;
             }
 
-            // The event that contains the event counter and updates it must be sent first.
-            // TODO: t7936714 merge these events
-            mEventDispatcher.dispatchEvent(
-                    new ReactTextChangedEvent(
-                            mEditText.getId(),
-                            mEditText.toHtml(false),
-                            mEditText.incrementAndGetEventCounter()));
-
             mEventDispatcher.dispatchEvent(
                     new ReactTextInputEvent(
                             mEditText.getId(),
@@ -497,6 +489,11 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
 
         @Override
         public void afterTextChanged(Editable s) {
+            mEventDispatcher.dispatchEvent(
+                    new ReactTextChangedEvent(
+                            mEditText.getId(),
+                            mEditText.toHtml(false),
+                            mEditText.incrementAndGetEventCounter()));
         }
     }
 
