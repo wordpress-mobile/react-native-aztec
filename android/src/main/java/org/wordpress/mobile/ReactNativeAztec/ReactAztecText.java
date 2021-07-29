@@ -141,11 +141,11 @@ public class ReactAztecText extends AztecText {
     }
 
     public void scrollToBottom() {
-        final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight();
+        final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight() + 50;
 
         // only scroll if the user is already at the bottom.  ignore otherwise
         if (scrollAmount > 0 && this.getSelectionStart() >= this.getText().toString().length() - 1) {
-            this.scrollTo(0, scrollAmount + 50);
+            this.scrollTo(0, scrollAmount);
 
             super.setSelection(this.length());
         }
