@@ -1074,7 +1074,7 @@ babel-messages@^6.23.0:
 
 babel-plugin-istanbul@^4.1.6:
   version "4.1.6"
-  resolved "http://registry.npmjs.org/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.6.tgz#36c59b2192efce81c5b378321b74175add1c9a45"
+  resolved "https://registry.npmjs.org/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.6.tgz#36c59b2192efce81c5b378321b74175add1c9a45"
   integrity sha512-PWP9FQ1AhZhS01T/4qLSKoHGY/xvkZdVBGlKM/HuxxS3+sC66HhTNR7+MpbO/so/cz/wY94MeSWJuP1hXIPfwQ==
   dependencies:
     babel-plugin-syntax-object-rest-spread "^6.13.0"
@@ -5829,9 +5829,9 @@ tmp@^0.0.33:
     os-tmpdir "~1.0.2"
 
 tmpl@1.0.x:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
-  integrity sha1-I2QN17QtAEM5ERQIIOXPRA5SHdE=
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
+  integrity sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==
 
 to-fast-properties@^1.0.3:
   version "1.0.3"
@@ -6302,7 +6302,7 @@ yargs-parser@^9.0.2:
 
 yargs@^11.0.0:
   version "11.1.0"
-  resolved "http://registry.npmjs.org/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
+  resolved "https://registry.npmjs.org/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
   integrity sha512-NwW69J42EsCSanF8kyn5upxvjp5ds+t3+udGBeTbFnERA+lF541DDpMawzo4z6W/QrzNM18D+BPMiOBibnFV5A==
   dependencies:
     cliui "^4.0.0"
