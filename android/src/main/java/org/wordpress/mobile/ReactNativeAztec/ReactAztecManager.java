@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -91,6 +92,8 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         aztecText.setFocusableInTouchMode(true);
         aztecText.setFocusable(true);
         aztecText.setCalypsoMode(false);
+        aztecText.setLinksClickable(true);
+        aztecText.setAutoLinkMask(Linkify.WEB_URLS);
         return aztecText;
     }
 

@@ -81,6 +81,18 @@ public class ReactAztecText extends AztecText {
         });
         this.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         this.setGravity(Gravity.TOP | Gravity.START);
+
+        BetterLinkMovementMethod linkClick = BetterLinkMovementMethod.newInstance();
+
+        linkClick.setOnLinkClickListener(new BetterLinkMovementMethod.OnLinkClickListener() {
+            @Override
+            public boolean onClick(TextView textView, String url) {
+                hideSoftKeyboard();
+                return false;
+            }
+        });
+
+        this.setMovementMethod(linkClick);
     }
 
     @Override
