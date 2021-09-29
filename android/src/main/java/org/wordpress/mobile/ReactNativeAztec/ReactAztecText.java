@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.text.Spannable;
 import android.view.Gravity;
+import android.widget.TextView;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
