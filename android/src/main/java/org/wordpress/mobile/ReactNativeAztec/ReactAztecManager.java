@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.InputType;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.util.TypedValue;
@@ -290,6 +291,15 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
             view.setHintTextColor(DefaultStyleValuesUtil.getDefaultTextColorHint(view.getContext()));
         } else {
             view.setHintTextColor(color);
+        }
+    }
+
+    @ReactProp(name = "autoCorrect")
+    public void setAutoCorrect(ReactAztecText view, Boolean autoCorrect) {
+        if (autoCorrect) {
+            view.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+        } else {
+            view.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         }
     }
 

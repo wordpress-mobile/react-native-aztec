@@ -14,6 +14,7 @@ class RCTAztecView: Aztec.TextView {
     @objc var onSelectionChange: RCTBubblingEventBlock? = nil
     @objc var onActiveFormatsChange: RCTBubblingEventBlock? = nil
     @objc var onActiveFormatAttributesChange: RCTBubblingEventBlock? = nil
+    @objc var autoCorrect: Bool = false
     @objc var blockType: NSDictionary? = nil {
         didSet {
             guard let block = blockType, let tag = block["tag"] as? String else {
@@ -27,6 +28,10 @@ class RCTAztecView: Aztec.TextView {
         didSet {
             forceTypingAttributesIfNeeded()
         }
+    }
+
+    override func didSetProps(_ changedProps: [String]!) {
+        autocorrectionType = self.autoCorrect ? .yes : .no
     }
 
     private var previousContentSize: CGSize = .zero
@@ -66,6 +71,7 @@ class RCTAztecView: Aztec.TextView {
             placeholderLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInset.left + textContainerInset.left + textContainer.lineFragmentPadding),
             placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: contentInset.top + textContainerInset.top)
             ])
+        autocorrectionType = autoCorrect ? .yes : .no;
     }
 
     // MARK - View Height: Match to content height
