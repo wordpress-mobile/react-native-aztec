@@ -1,4 +1,4 @@
-## Notice: We have git subtree'd this repo into https://github.com/wordpress-mobile/gutenberg-mobile. It is recommended that any new development happens on that one instead. Thanks!
+## Notice: We no longer intend to maintain this project in isolation from [Gutenberg Mobile](https://github.com/wordpress-mobile/gutenberg-mobile). If you would like to use a Rich Text Editor in your app, please consider using Gutenberg Mobile as an alternative. We have git subtree'd this repo into Gutenberg Mobile. It is recommended that any new development happens on that one instead. Thanks!
 
 # react-native-aztec
 
