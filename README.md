@@ -1,6 +1,5 @@
-## Notice: We have git subtree'd this repo into https://github.com/wordpress-mobile/gutenberg-mobile. It is recommended that any new development happens on that one instead. Thanks!
-
 # react-native-aztec
+## Notice: This repo is no longer maintained. The code from this repo was moved to [the Gutenberg repository](https://github.com/WordPress/gutenberg/tree/trunk/packages/react-native-aztec) and is now maintained there. If you would like to use a Rich Text Editor in your app, please consider using [Gutenberg Mobile](https://github.com/wordpress-mobile/gutenberg-mobile).
 
 Wrapping Aztec Android and Aztec iOS in a React Native component
 
