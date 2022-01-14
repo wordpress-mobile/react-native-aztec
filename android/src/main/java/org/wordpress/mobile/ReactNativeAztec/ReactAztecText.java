@@ -152,12 +152,10 @@ public class ReactAztecText extends AztecText {
         super.setSelection(this.length());
 
         showSoftKeyboard();
-
-        sendKeysSpaceAndBackspace();
         return focused;
     }
 
-    public void sendKeysSpaceAndBackspace() {
+    public void sendSpaceAndBackspace() {
         BaseInputConnection inputConnection = new BaseInputConnection(this, true);
         inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE));
         inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
