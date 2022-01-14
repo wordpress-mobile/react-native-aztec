@@ -84,6 +84,12 @@ class AztecView extends React.Component {
     }
   }
 
+  sendSpaceAndBackspace() {
+    if(Platform.OS === 'android') {
+      this.dispatch(AztecManager.Commands.sendSpaceAndBackspace);
+    }
+  }
+
   requestHTMLWithCursor() {
     this.dispatch(AztecManager.Commands.returnHTMLWithCursor)
   }
