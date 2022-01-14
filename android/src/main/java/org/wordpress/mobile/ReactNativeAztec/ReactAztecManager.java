@@ -55,6 +55,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     private static final int BLUR_TEXT_INPUT = 2;
     private static final int SET_HTML = 3;
     private static final int SCROLL_TO_BOTTOM = 4;
+    private static final int SEND_SPACE_AND_BACKSPACE = 5;
     private static final int COMMAND_NOTIFY_APPLY_FORMAT = 100;
     private static final int UNSET = -1;
 
@@ -65,6 +66,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
     private int mBlurTextInputCommandCode = BLUR_TEXT_INPUT; // pre-init
     private int mSetHTMLCommandCode = SET_HTML;
     private int mScrollToBottomCode = SCROLL_TO_BOTTOM;
+    private int mSendSpaceAndBackspaceCode = SEND_SPACE_AND_BACKSPACE;
 
     private static final String TAG = "ReactAztecText";
 
@@ -400,6 +402,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
                 .put("blurTextInput", mBlurTextInputCommandCode)
                 .put("setHTML", mSetHTMLCommandCode)
                 .put("scrollToBottom", mScrollToBottomCode)
+                .put("sendSpaceAndBackspace", mSendSpaceAndBackspaceCode)
                 .build();
     }
 
@@ -424,6 +427,8 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         } else if (commandType == mScrollToBottomCode) {
             Log.d("SCROLLING", "1");
             parent.scrollToBottom();
+        } else if (commandType == mSendSpaceAndBackspaceCode) {
+            parent.sendSpaceAndBackspace();
         }
         super.receiveCommand(parent, commandType, args);
     }
@@ -585,3 +590,4 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         }
     }
 }
+
