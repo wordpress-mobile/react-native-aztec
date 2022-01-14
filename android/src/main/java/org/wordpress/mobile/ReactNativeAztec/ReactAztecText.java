@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.text.Spannable;
 import android.view.Gravity;
 import android.widget.TextView;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.KeyEvent;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
@@ -150,7 +152,15 @@ public class ReactAztecText extends AztecText {
         super.setSelection(this.length());
 
         showSoftKeyboard();
+
+        sendKeysSpaceAndBackspace();
         return focused;
+    }
+
+    public void sendKeysSpaceAndBackspace() {
+        BaseInputConnection inputConnection = new BaseInputConnection(this, true);
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE));
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
     }
 
     public void scrollToBottom() {
@@ -453,3 +463,4 @@ public class ReactAztecText extends AztecText {
         }
     }
 }
+
