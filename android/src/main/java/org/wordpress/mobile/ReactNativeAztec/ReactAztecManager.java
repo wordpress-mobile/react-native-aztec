@@ -11,6 +11,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
@@ -97,6 +98,7 @@ public class ReactAztecManager extends SimpleViewManager<ReactAztecText> {
         aztecText.setCalypsoMode(false);
         aztecText.setLinksClickable(true);
         aztecText.setAutoLinkMask(Linkify.WEB_URLS);
+        aztecText.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         return aztecText;
     }
 
