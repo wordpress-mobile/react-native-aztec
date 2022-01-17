@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactNative, {requireNativeComponent, ViewPropTypes, UIManager, ColorPropType, TouchableWithoutFeedback} from 'react-native';
-import TextInputState from 'react-native/lib/TextInputState';
+import ReactNative, {Platform, ViewPropTypes, UIManager, ColorPropType, TouchableWithoutFeedback} from 'react-native';
+import TextInputState from 'react-native/Libraries/Components/TextInput/TextInputState';
+import RCTAztecView from './RCTAztecView';
 
 const AztecManager = UIManager.RCTAztecView;
 
@@ -14,6 +15,7 @@ class AztecView extends React.Component {
     text: PropTypes.object,
     placeholder: PropTypes.string,
     placeholderTextColor: ColorPropType,
+    autoCorrect: PropTypes.boolean,
     color: ColorPropType,
     maxImagesWidth: PropTypes.number,
     minImagesWidth: PropTypes.number,
@@ -33,14 +35,21 @@ class AztecView extends React.Component {
     ...ViewPropTypes, // include the default view properties
   }
 
-  dispatch(command, params) {
+  dispatch = (command, params) => {
     params = params || [];
-    UIManager.dispatchViewManagerCommand(
-                                          ReactNative.findNodeHandle(this),
-                                          command,
-                                          params,
-    );
+
+    try {
+      UIManager.dispatchViewManagerCommand(
+                                            ReactNative.findNodeHandle(this),
+                                            command,
+                                            params,
+      );
+    } catch(error) {
+      console.log({error})
+    }
   }
+
+  _inputRef = null;
 
   applyFormat(format) {
     this.dispatch(AztecManager.Commands.applyFormat, [format])
@@ -52,6 +61,33 @@ class AztecView extends React.Component {
 
   setLink(url, title) {
     this.dispatch(AztecManager.Commands.setLink, [url, title])
+  }
+
+  focus() {
+  }
+
+  focusEndOfDocument() {
+    this.dispatch(AztecManager.Commands.focusTextInput)
+  }
+
+  blur() {
+    this.dispatch(AztecManager.Commands.blurTextInput)
+  }
+
+  setHTML(html) {
+    this.dispatch(AztecManager.Commands.setHTML, [html])
+  }
+
+  scrollToBottom() {
+    if (Platform.OS === 'android') {
+      this.dispatch(AztecManager.Commands.scrollToBottom);
+    }
+  }
+
+  sendSpaceAndBackspace() {
+    if(Platform.OS === 'android') {
+      this.dispatch(AztecManager.Commands.sendSpaceAndBackspace);
+    }
   }
 
   requestHTMLWithCursor() {
@@ -83,6 +119,8 @@ class AztecView extends React.Component {
     const size = event.nativeEvent.contentSize;
     const { onContentSizeChange } = this.props;
     onContentSizeChange(size);
+
+    this.scrollToBottom();
   }
 
   _onEnter = (event) => {
@@ -126,7 +164,6 @@ class AztecView extends React.Component {
   
   _onBlur = (event) => {
     this.selectionEndCaretY = null;
-    TextInputState.blurTextInput(ReactNative.findNodeHandle(this));
 
     if (!this.props.onBlur) {
       return;
@@ -151,14 +188,6 @@ class AztecView extends React.Component {
     }
   }
 
-  blur = () => {
-    TextInputState.blurTextInput(ReactNative.findNodeHandle(this));
-  }
-
-  focus = () => {
-    TextInputState.focusTextInput(ReactNative.findNodeHandle(this));
-  }
-
   isFocused = () => {
     const focusedField = TextInputState.currentlyFocusedField();
     return focusedField && ( focusedField === ReactNative.findNodeHandle(this) );
@@ -167,6 +196,12 @@ class AztecView extends React.Component {
   _onPress = (event) => {
     this.focus(event); // Call to move the focus in RN way (TextInputState)
     this._onFocus(event); // Check if there are listeners set on the focus event
+
+    if (Platform.OS === 'android') {
+      setTimeout(() => {
+        this.sendSpaceAndBackspace(); 
+      }, 250);
+    }
   }
 
   render() {
@@ -174,6 +209,7 @@ class AztecView extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={ this._onPress }>
         <RCTAztecView {...otherProps}
+          ref={ref => this._inputRef = ref}
           onActiveFormatsChange={ this._onActiveFormatsChange }
           onActiveFormatAttributesChange={ this._onActiveFormatAttributesChange }
           onContentSizeChange = { this._onContentSizeChange }
@@ -191,7 +227,5 @@ class AztecView extends React.Component {
     );
   }
 }
-
-const RCTAztecView = requireNativeComponent('RCTAztecView', AztecView);
 
 export default AztecView

@@ -1,27 +1,59 @@
 {
-  "name": "react-native-aztec",
-  "version": "0.1.5",
+  "_from": "git+https://github.com/ewindso/react-native-aztec.git",
+  "_id": "react-native-aztec@0.1.5",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-native-aztec",
+  "_phantomChildren": {
+    "asap": "2.0.6",
+    "isomorphic-fetch": "2.2.1",
+    "loose-envify": "1.4.0",
+    "object-assign": "4.1.1",
+    "setimmediate": "1.0.5",
+    "ua-parser-js": "0.7.23"
+  },
+  "_requested": {
+    "type": "git",
+    "raw": "react-native-aztec@git+https://github.com/ewindso/react-native-aztec.git",
+    "name": "react-native-aztec",
+    "escapedName": "react-native-aztec",
+    "rawSpec": "git+https://github.com/ewindso/react-native-aztec.git",
+    "saveSpec": "git+https://github.com/ewindso/react-native-aztec.git",
+    "fetchSpec": "https://github.com/ewindso/react-native-aztec.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/ewindso/react-native-aztec.git#ff1999f5e6075c4361e1b1051e66a45f7007bc6e",
+  "_spec": "react-native-aztec@git+https://github.com/ewindso/react-native-aztec.git",
+  "_where": "/Users/elijahwindsor/Github/GrowthDayMobile",
+  "bundleDependencies": false,
+  "dependencies": {
+    "prop-types": "15.6.0"
+  },
+  "deprecated": false,
+  "description": "# react-native-aztec",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.69.0"
+  },
   "license": "(MPL-2.0 OR GPL-2.0)",
+  "name": "react-native-aztec",
+  "peerDependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.2"
+  },
   "scripts": {
-    "install-aztec-ios": "cd ./ios && carthage bootstrap --platform iOS --cache-builds",
     "clean": "yarn clean-watchman; yarn clean-node; yarn clean-react; yarn clean-metro; yarn clean-jest;",
     "clean-jest": "rm -rf $TMPDIR/jest_*;",
     "clean-metro": "rm -rf $TMPDIR/metro-cache-*; rm -rf $TMPDIR/metro-bundler-cache-*;",
     "clean-node": "rm -rf node_modules/;",
     "clean-react": "rm -rf $TMPDIR/react-*; rm -rf $TMPDIR/react-native-packager-cache-*;",
     "clean-watchman": "command -v watchman >/dev/null 2>&1 && watchman watch-del-all;",
-    "clean:install": "yarn clean && yarn install"
+    "clean:install": "yarn clean && yarn install",
+    "install-aztec-ios": "cd ./ios && carthage bootstrap --platform iOS --cache-builds"
   },
-  "peerDependencies": {
-    "react": "16.6.1",
-    "react-native": "0.57.5"
-  },
-  "dependencies": {
-    "prop-types": "15.6.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-flow": "^6.23.0",
-    "flow-bin": "^0.69.0"
-  }
+  "version": "0.1.5"
 }

@@ -18,8 +18,13 @@ RCT_EXPORT_VIEW_PROPERTY(onActiveFormatAttributesChange, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(placeholder, NSString)
 RCT_EXPORT_VIEW_PROPERTY(placeholderTextColor, UIColor)
 
+RCT_EXPORT_VIEW_PROPERTY(autoCorrect, BOOL)
+
 RCT_EXTERN_METHOD(applyFormat:(nonnull NSNumber *)node format:(NSString *)format)
 RCT_EXTERN_METHOD(setLink:(nonnull NSNumber *)node url:(nonnull NSString *)url title:(nullable NSString *)title)
 RCT_EXTERN_METHOD(removeLink:(nonnull NSNumber *)node)
+RCT_EXTERN_METHOD(focusTextInput:(nonnull NSNumber *)node)
+RCT_EXTERN_METHOD(blurTextInput:(nonnull NSNumber *)node)
+RCT_EXTERN_METHOD(setHTML:(nonnull NSNumber *)node html:(NSString *)html)
 
 @end

@@ -2,11 +2,16 @@ package org.wordpress.mobile.ReactNativeAztec;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
+import android.text.Spannable;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.KeyEvent;
 
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReactContext;
@@ -19,6 +24,7 @@ import com.facebook.react.views.textinput.ReactTextInputLocalData;
 import com.facebook.react.views.textinput.ScrollWatcher;
 
 import org.wordpress.aztec.AztecText;
+import org.wordpress.aztec.AlignmentRendering;
 import org.wordpress.aztec.AztecTextFormat;
 import org.wordpress.aztec.ITextFormat;
 import org.wordpress.aztec.plugins.IAztecPlugin;
@@ -56,10 +62,7 @@ public class ReactAztecText extends AztecText {
         super(reactContext);
         this.setAztecKeyListener(new ReactAztecText.OnAztecKeyListener() {
             @Override
-            public boolean onEnterKey() {
-                if (shouldHandleOnEnter) {
-                    return onEnter();
-                }
+            public boolean onEnterKey(Spannable text, boolean firedAfterTextChanged, int selStart, int selEnd) {
                 return false;
             }
             @Override
@@ -80,6 +83,19 @@ public class ReactAztecText extends AztecText {
             }
         });
         this.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        this.setGravity(Gravity.TOP | Gravity.START);
+
+        BetterLinkMovementMethod linkClick = BetterLinkMovementMethod.newInstance();
+
+        linkClick.setOnLinkClickListener(new BetterLinkMovementMethod.OnLinkClickListener() {
+            @Override
+            public boolean onClick(TextView textView, String url) {
+                hideSoftKeyboard();
+                return false;
+            }
+        });
+
+        this.setMovementMethod(linkClick);
     }
 
     @Override
@@ -127,8 +143,33 @@ public class ReactAztecText extends AztecText {
         }*/
         setFocusableInTouchMode(true);
         boolean focused = super.requestFocus(direction, previouslyFocusedRect);
+
+        final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight();
+        if (scrollAmount > 0) {
+            this.scrollTo(0, scrollAmount + 50);
+        }
+
+        super.setSelection(this.length());
+
         showSoftKeyboard();
         return focused;
+    }
+
+    public void sendSpaceAndBackspace() {
+        BaseInputConnection inputConnection = new BaseInputConnection(this, true);
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE));
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+    }
+
+    public void scrollToBottom() {
+        final int scrollAmount = this.getLayout().getLineTop(this.getLineCount()) - this.getHeight() + 50;
+
+        // only scroll if the user is already at the bottom.  ignore otherwise
+        if (scrollAmount > 0 && this.getSelectionStart() >= this.getText().toString().length() - 1) {
+            this.scrollTo(0, scrollAmount);
+
+            super.setSelection(this.length());
+        }
     }
 
     private boolean showSoftKeyboard() {
@@ -193,6 +234,10 @@ public class ReactAztecText extends AztecText {
             }
             if (currentStyle == AztecTextFormat.FORMAT_STRIKETHROUGH) {
                 formattingOptions.add("strikethrough");
+            }
+
+            if (currentStyle == AztecTextFormat.FORMAT_UNDERLINE) {
+                formattingOptions.add("underline");
             }
         }
 
@@ -331,6 +376,9 @@ public class ReactAztecText extends AztecText {
             case ("strikethrough"):
                 newFormats.add(AztecTextFormat.FORMAT_STRIKETHROUGH);
             break;
+            case ("underline"):
+                newFormats.add(AztecTextFormat.FORMAT_UNDERLINE);
+            break;
         }
 
         if (newFormats.size() == 0) {
@@ -413,3 +461,4 @@ public class ReactAztecText extends AztecText {
         }
     }
 }
+

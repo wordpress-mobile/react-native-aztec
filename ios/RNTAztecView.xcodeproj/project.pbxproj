@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		397407BB263770E700DE50C1 /* MediaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397407BA263770E600DE50C1 /* MediaProvider.swift */; };
 		7ECFA93C21C39B5000FC131B /* HeadingBlockFormatHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFA93B21C39B5000FC131B /* HeadingBlockFormatHandler.swift */; };
 		7ECFA94021C39BA000FC131B /* BlockFormatHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFA93F21C39BA000FC131B /* BlockFormatHandler.swift */; };
 		7ECFA94221C39BBB00FC131B /* BlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFA94121C39BBB00FC131B /* BlockModel.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		397407BA263770E600DE50C1 /* MediaProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProvider.swift; sourceTree = "<group>"; };
 		7ECFA93B21C39B5000FC131B /* HeadingBlockFormatHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingBlockFormatHandler.swift; sourceTree = "<group>"; };
 		7ECFA93F21C39BA000FC131B /* BlockFormatHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockFormatHandler.swift; sourceTree = "<group>"; };
 		7ECFA94121C39BBB00FC131B /* BlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockModel.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				7ECFA94121C39BBB00FC131B /* BlockModel.swift */,
 				7ECFA93B21C39B5000FC131B /* HeadingBlockFormatHandler.swift */,
 				7ECFA93F21C39BA000FC131B /* BlockFormatHandler.swift */,
+				397407BA263770E600DE50C1 /* MediaProvider.swift */,
 			);
 			path = RNTAztecView;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7ECFA94021C39BA000FC131B /* BlockFormatHandler.swift in Sources */,
+				397407BB263770E700DE50C1 /* MediaProvider.swift in Sources */,
 				7ECFA93C21C39B5000FC131B /* HeadingBlockFormatHandler.swift in Sources */,
 				F13BF4A020ECF5450047D3F9 /* RCTAztecViewManager.swift in Sources */,
 				F1A879D020EE90C000FABD31 /* RCTAztecView.swift in Sources */,
@@ -287,7 +291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -341,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

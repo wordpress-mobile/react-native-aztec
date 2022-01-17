@@ -9,11 +9,11 @@ Pod::Spec.new do |s|
   s.license          = package['license']
   s.homepage         = 'https://github.com/wordpress-mobile/react-native-aztec'
   s.authors          = 'Automattic'
-  s.source           = { :git => 'https://github.com/wordpress-mobile/react-native-aztec.git' }
+  s.source           = { :git => 'https://github.com/ewindso/react-native-aztec' }
   s.source_files     = 'ios/RNTAztecView/*.{h,m,swift}'
   s.public_header_files = 'ios/RNTAztecView/*.h'
   s.requires_arc     = true
-  s.platforms        = { :ios => "10.0" }
+  s.platforms        = { :ios => "11.0" }
   s.xcconfig         = {'OTHER_LDFLAGS' => '-lxml2',
 						'HEADER_SEARCH_PATHS' => '/usr/include/libxml2'}
   s.dependency         'React'

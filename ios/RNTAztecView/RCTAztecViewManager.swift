@@ -4,9 +4,12 @@ import Foundation
 @objc (RCTAztecViewManager)
 public class RCTAztecViewManager: RCTViewManager {
 
-    public var attachmentDelegate: Aztec.TextViewAttachmentDelegate?
-    public var imageProvider: Aztec.TextViewAttachmentImageProvider?
-
+    public static var attachmentDelegate: Aztec.TextViewAttachmentDelegate?
+    public static var imageProvider: Aztec.TextViewAttachmentImageProvider?
+    
+    @objc
+    public static var defaultFont: UIFont?
+    
     public override static func requiresMainQueueSetup() -> Bool {
         return true
     }
@@ -17,7 +20,32 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.apply(format: format)
         }, onNode: node)
     }
+    
+    @objc
+    func focusTextInput(_ node: NSNumber) {
+        executeBlock({ (aztecView) in
+            aztecView.becomeFirstResponder()
+            
+            let newPosition = aztecView.endOfDocument
+            aztecView.selectedTextRange = aztecView.textRange(from: newPosition, to: newPosition)
+        }, onNode: node)
+    }
+    
+    @objc
+    func setHTML(_ node: NSNumber, html: String) {
+        executeBlock({ (aztecView) in
+            aztecView.setHTML(html)
+            aztecView.updatePlaceholderVisibility()
+        }, onNode: node)
+    }
 
+    @objc
+    func blurTextInput(_ node: NSNumber) {
+        executeBlock({ (aztecView) in
+            aztecView.hideKeyboard()
+        }, onNode: node)
+    }
+    
     @objc
     func removeLink(_ node: NSNumber) {
         executeBlock({ (aztecView) in
@@ -31,21 +59,43 @@ public class RCTAztecViewManager: RCTViewManager {
             aztecView.setLink(with: url, and: title)
         }, onNode: node)
     }
-
+    
+    
+    
     @objc
     public override func view() -> UIView {
+        if (RCTAztecViewManager.defaultFont == nil) {
+            RCTAztecViewManager.defaultFont = UIFont(name: "Inter-Regular", size: 16.0);
+        }
         let view = RCTAztecView(
             defaultFont: defaultFont,
             defaultParagraphStyle: .default,
             defaultMissingImage: UIImage())
 
-        view.isScrollEnabled = false
-
-        view.textAttachmentDelegate = attachmentDelegate
-        if let imageProvider = imageProvider {
-            view.registerAttachmentImageProvider(imageProvider)
+        view.isScrollEnabled = true
+        
+        view.autocorrectionType = .no
+        
+        let defaultMediaProvider = MediaProvider()
+        
+        if (RCTAztecViewManager.attachmentDelegate == nil) {
+            RCTAztecViewManager.attachmentDelegate = defaultMediaProvider
+        }
+        
+        if (RCTAztecViewManager.imageProvider == nil) {
+            RCTAztecViewManager.imageProvider = defaultMediaProvider
         }
 
+        view.textAttachmentDelegate = RCTAztecViewManager.attachmentDelegate
+        
+        if let imageProvider = RCTAztecViewManager.imageProvider {
+            view.registerAttachmentImageProvider(imageProvider)
+        }
+        
+        if #available(iOS 13, *) {
+            view.overrideUserInterfaceStyle = .light
+        }
+    
         return view
     }
 
@@ -59,20 +109,20 @@ public class RCTAztecViewManager: RCTViewManager {
         }
     }
 
-    private var defaultFont: UIFont {
-        if let font = UIFont(name: "NotoSerif", size: 16) {
-            return font
-        }
+     private var defaultFont: UIFont {
+         if let font = UIFont(name: "NotoSerif", size: 16) {
+             return font
+         }
 
-        let defaultFont = UIFont.systemFont(ofSize: 16)
-        guard let url = Bundle.main.url(forResource: "NotoSerif-Regular", withExtension: "ttf") else {
-            return defaultFont
-        }
-        CTFontManagerRegisterFontsForURL(url as CFURL, CTFontManagerScope.process, nil)
-        if let font = UIFont(name: "NotoSerif", size: 16) {
-            return font
-        }
+         let defaultFont = UIFont.systemFont(ofSize: 16)
+         guard let url = Bundle.main.url(forResource: "NotoSerif-Regular", withExtension: "ttf") else {
+             return defaultFont
+         }
+         CTFontManagerRegisterFontsForURL(url as CFURL, CTFontManagerScope.process, nil)
+         if let font = UIFont(name: "NotoSerif", size: 16) {
+             return font
+         }
 
-        return defaultFont
-    }
+         return defaultFont
+     }
 }
